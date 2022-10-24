@@ -1,0 +1,26 @@
+{
+    "users": [
+        {
+            "user_id": 0,
+            "username": "Josicreison",
+            "password": "Banana666"
+        }
+    ],
+    "books": [
+        {
+            "book_id": 0,
+            "author_id": "0",
+            "title": "How to Pick Up Fair Maidens",
+            "description": "nondescript",
+            "isbn": "66613",
+            "publishing_date": "2015-03-24"
+        }
+    ],
+    "authors": [
+        {
+            "author_id": 0,
+            "name": "Michael Zaki",
+            "birth_date": "1974-01-01"
+        }
+    ]
+}
