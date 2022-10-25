@@ -1,27 +1,27 @@
 {
-    "users": [
-        {
-            "user_id": 0,
-            "username": "Josicreison",
-            "password": "Banana666"
-        }
-    ],
-    "books": [
-        {
-            "book_id": 0,
-            "author_id": "0",
-            "title": "How to Pick Up Fair Maidens",
-            "description": "nondescript",
-            "isbn": "66613",
-            "publishing_date": "2015-03-24",
-            "cover_url": "https://images-na.ssl-images-amazon.com/images/I/61YXdz4EVtL.jpg"
-        }
-    ],
-    "authors": [
-        {
-            "author_id": 0,
-            "name": "Michael Zaki",
-            "birth_date": "1974-01-01"
-        }
-    ]
+  "users": [
+    {
+      "id": 0,
+      "username": "Josicreison",
+      "password": "Banana666"
+    }
+  ],
+  "books": [
+    {
+      "id": 0,
+      "authorId": "0",
+      "title": "How to Pick Up Fair Maidens",
+      "description": "no description",
+      "isbn": "66613",
+      "publishing_date": "2015-03-24",
+      "cover_url": "https://images-na.ssl-images-amazon.com/images/I/61YXdz4EVtL.jpg"
+    }
+  ],
+  "authors": [
+    {
+      "id": 0,
+      "name": "Michael Zaki",
+      "birth_date": "1974-01-01"
+    }
+  ]
 }
