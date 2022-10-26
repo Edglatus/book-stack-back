@@ -1,5 +1,6 @@
-export interface iAuthor {
-    id: string;
+import iDomainObject from "./domainObject";
+
+export interface iAuthor extends iDomainObject {
     name: string;
     birth_date: Date;
 } 

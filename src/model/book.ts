@@ -1,5 +1,6 @@
-export interface iBook {
-    id: string;
+import iDomainObject from "./domainObject";
+
+export interface iBook extends iDomainObject{
     title: string;
     description: string;
     isbn: string;

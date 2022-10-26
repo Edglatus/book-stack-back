@@ -1,5 +1,6 @@
-export interface iUser {
-    id: string;
+import iDomainObject from "./domainObject";
+
+export interface iUser extends iDomainObject{
     username: string;
     password: string;
 }

@@ -10,14 +10,17 @@ export default interface iController<T> {
     delete(request: express.Request, response: express.Response): Promise<express.Response>;
 }
 
-export default class Controller<T> implements iController<T> {
+export default class GenericController<T> implements iController<T> {
     adapter: iAdapter<T>;
     async getOne(request: express.Request, response: express.Response): Promise<express.Response> {
         try {
             const id: string = request.params.id;
-            let obj: T = await this.adapter.GetOne(id);
+            let obj: T | null = await this.adapter.GetOne(id);
 
-            return response.status(200).json(obj);
+            if(obj === null)
+                return response.status(404).json({"message": "Object not Found"})
+            else
+                return response.status(200).json(obj);
         }
         catch(e) {
             return this.handleError(e, response);
@@ -36,9 +39,12 @@ export default class Controller<T> implements iController<T> {
     async create(request: express.Request, response: express.Response): Promise<express.Response> {
         try {
             let obj: T = request.body;
-            await this.adapter.Create(obj);
+            let success = await this.adapter.Create(obj);
 
-            return response.status(200).json(obj);
+            if(success)
+                return response.status(200).json(obj);
+            else
+                return response.status(409).json({"message": "Object already exists."});
         }
         catch(e) {
             return this.handleError(e, response);
@@ -50,8 +56,9 @@ export default class Controller<T> implements iController<T> {
             let obj: T = request.body;
             const success: boolean = await this.adapter.Update(id, obj);
             const status: number = success ? 200 : 404;
+            const message: string = success ? "Object updated." : "Object not Found";
 
-            return response.status(status).json({"success": success});
+            return response.status(status).json({"success": success, "message": message});
         }
         catch(e) {
             return this.handleError(e, response);
@@ -62,8 +69,9 @@ export default class Controller<T> implements iController<T> {
             const id: string = request.params.id;
             const success: boolean = await this.adapter.Delete(id);
             const status: number = success ? 200 : 404;
+            const message: string = success ? "Object updated." : "Object not Found";
 
-            return response.status(status).json({"success": success});
+            return response.status(status).json({"success": success, "message": message});
         }
         catch(e) {
             return this.handleError(e, response);
@@ -79,7 +87,7 @@ export default class Controller<T> implements iController<T> {
             message = e.message
         }
 
-        return response.status(500).json(message);
+        return response.status(500).json({"message": message});
     }
 
     constructor(adapter: iAdapter<T>){
