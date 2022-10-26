@@ -1,11 +1,6 @@
 import { iUser } from "../../model/user";
-import iAdapter from "../adapter";
+import { iUserAdapter } from "../user";
 import GenericAdapterInMemory from "./generic";
-
-
-export interface iUserAdapter extends iAdapter<iUser> {
-    Authenticate(name: string, pwd: string): Promise<boolean>;
-}
 
 export default class UserAdapterInMemory extends GenericAdapterInMemory<iUser> implements iUserAdapter {
     

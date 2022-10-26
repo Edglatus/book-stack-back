@@ -1,5 +1,5 @@
 import iAdapter from "../adapter/adapter";
-import { iUserAdapter } from "../adapter/inMemory/user";
+import { iUserAdapter } from "../adapter/user";
 import { Author } from "../model/author";
 import { Book } from "../model/book";
 
