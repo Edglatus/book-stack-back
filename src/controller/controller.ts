@@ -4,16 +4,16 @@ import iDomainObject from "../model/domainObject";
 
 export default interface iController<T extends iDomainObject> {
     adapter: iAdapter<T>;
-    getOne(request: express.Request, response: express.Response): Promise<express.Response>;
-    getAll(request: express.Request, response: express.Response): Promise<express.Response>;
-    create(request: express.Request, response: express.Response): Promise<express.Response>;
-    update(request: express.Request, response: express.Response): Promise<express.Response>;
-    delete(request: express.Request, response: express.Response): Promise<express.Response>;
+    GetOne(request: express.Request, response: express.Response): Promise<express.Response>;
+    GetAll(request: express.Request, response: express.Response): Promise<express.Response>;
+    Create(request: express.Request, response: express.Response): Promise<express.Response>;
+    Update(request: express.Request, response: express.Response): Promise<express.Response>;
+    Delete(request: express.Request, response: express.Response): Promise<express.Response>;
 }
 
-export default class GenericController<T> implements iController<T> {
+export class GenericController<T extends iDomainObject> implements iController<T> {
     adapter: iAdapter<T>;
-    async getOne(request: express.Request, response: express.Response): Promise<express.Response> {
+    async GetOne(request: express.Request, response: express.Response): Promise<express.Response> {
         try {
             const id: string = request.params.id;
             let obj: T | null = await this.adapter.GetOne(id);
@@ -21,29 +21,29 @@ export default class GenericController<T> implements iController<T> {
             if(obj === null)
                 return response.status(404).json({"message": "Object not Found"})
             else
-                return response.status(200).json(obj);
+                return response.status(200).json({"data": obj});
         }
         catch(e) {
             return this.handleError(e, response);
         }
     }
-    async getAll(request: express.Request, response: express.Response): Promise<express.Response> {
+    async GetAll(request: express.Request, response: express.Response): Promise<express.Response> {
         try {
             let objs: T[] = await this.adapter.GetAll();
 
-            return response.status(200).json(objs);
+            return response.status(200).json({"data": objs});
         }
         catch(e) {
             return this.handleError(e, response);
         }
     }
-    async create(request: express.Request, response: express.Response): Promise<express.Response> {
+    async Create(request: express.Request, response: express.Response): Promise<express.Response> {
         try {
             let obj: T = request.body;
             let success = await this.adapter.Create(obj);
 
             if(success)
-                return response.status(200).json(obj);
+                return response.status(200).json({"data": obj});
             else
                 return response.status(409).json({"message": "Object already exists."});
         }
@@ -51,7 +51,7 @@ export default class GenericController<T> implements iController<T> {
             return this.handleError(e, response);
         }
     }
-    async update(request: express.Request, response: express.Response): Promise<express.Response> {
+    async Update(request: express.Request, response: express.Response): Promise<express.Response> {
         try {
             const id: string = request.params.id;
             let obj: T = request.body;
@@ -65,7 +65,7 @@ export default class GenericController<T> implements iController<T> {
             return this.handleError(e, response);
         }
     }
-    async delete(request: express.Request, response: express.Response): Promise<express.Response> {
+    async Delete(request: express.Request, response: express.Response): Promise<express.Response> {
         try {
             const id: string = request.params.id;
             const success: boolean = await this.adapter.Delete(id);

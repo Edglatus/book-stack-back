@@ -5,11 +5,11 @@ import iDomainObject from "../model/domainObject";
 export default class GenericRouter {
     static CreateRoutes<T extends iDomainObject>(app: Express, controller: iController<T>, baseRouteName: string) {
         app.route("/" + baseRouteName)
-            .get(controller.getAll)
-            .post(controller.create)
-            .put(controller.update)
-            .delete(controller.delete);
+            .get(controller.GetAll)
+            .post(controller.Create)
+            .put(controller.Update)
+            .delete(controller.Delete);
 
-        app.route("/" + baseRouteName + "/id/:id").get(controller.getOne);
+        app.route("/" + baseRouteName + "/id/:id").get(controller.GetOne);
     }
 }
