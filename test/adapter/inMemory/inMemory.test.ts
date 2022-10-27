@@ -39,7 +39,7 @@ describe("inMemory Adapter Tests", () => {
     const author_a_clone: iAuthor = {name: "Eddy", birth_date: new Date(1996, 8, 28)};
     const updatedAuthor: iAuthor = {name: "Edglatus", birth_date: new Date(1996, 8, 23)};
 
-    TestAdapter<iAuthor>(new AuthorAdapterInMemory(), "Book Adapter", newAuthor_a, newAuthor_b, author_a_clone, updatedAuthor);
+    TestAdapter<iAuthor>(new AuthorAdapterInMemory(), "Author Adapter", newAuthor_a, newAuthor_b, author_a_clone, updatedAuthor);
 })
 
 // describe("Entity Creation", () => {
