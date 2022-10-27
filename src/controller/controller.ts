@@ -1,7 +1,8 @@
 import express from "express"
 import iAdapter from "../adapter/adapter"
+import iDomainObject from "../model/domainObject";
 
-export default interface iController<T> {
+export default interface iController<T extends iDomainObject> {
     adapter: iAdapter<T>;
     getOne(request: express.Request, response: express.Response): Promise<express.Response>;
     getAll(request: express.Request, response: express.Response): Promise<express.Response>;
