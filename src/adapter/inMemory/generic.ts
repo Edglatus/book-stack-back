@@ -3,6 +3,7 @@ import iAdapter from "../adapter";
 
 export default abstract class GenericAdapterInMemory<T extends iDomainObject> implements iAdapter<T> {
     protected _dict : Map<string, T>;
+    protected _currId: number;
 
     GetOne(id: string): Promise<T | null> {
         if(this._dict.has(id))
@@ -18,6 +19,9 @@ export default abstract class GenericAdapterInMemory<T extends iDomainObject> im
         let success: boolean;
 
         if(!this.Exists(object)) {
+            object.id = this._currId.toString();
+            this._currId++;
+
             this._dict.set(object.id, object);
             success = true;
         }
@@ -31,7 +35,7 @@ export default abstract class GenericAdapterInMemory<T extends iDomainObject> im
         let success: boolean;
 
         if(this.Exists(object)) {
-            this._dict.set(object.id, object);
+            this._dict.set(object.id as string, object);
             success = true;
         }
         else {
@@ -56,6 +60,7 @@ export default abstract class GenericAdapterInMemory<T extends iDomainObject> im
 
     constructor() {
         this._dict = new Map<string, T>();
+        this._currId = 0;
     }
 
     protected abstract Exists(object: T): boolean;
