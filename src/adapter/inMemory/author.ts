@@ -5,16 +5,20 @@ import GenericAdapterInMemory from "./generic";
 export default class AuthorAdapterInMemory extends GenericAdapterInMemory<iAuthor> {
     protected Exists(object: iAuthor): boolean {
         const aName: string = object.name.toLocaleLowerCase();
-
+        
         for (const u of this._dict.values()) {
             let fName: string = u.name.toLocaleLowerCase(); 
             if(aName == fName)
-                return true;
+            return true;
         }
-
+        
         return false;
     }
     
+    CreateAdapter(): GenericAdapterInMemory<iAuthor> {
+        return new AuthorAdapterInMemory();
+    }
+
     constructor() {
         super();
     }

@@ -42,6 +42,10 @@ export default class UserAdapterInMemory extends GenericAdapterInMemory<iUser> i
 
         return null;
     }
+    
+    CreateAdapter(): GenericAdapterInMemory<iUser> {
+        return new UserAdapterInMemory();
+    }
 
     constructor() {
         super();

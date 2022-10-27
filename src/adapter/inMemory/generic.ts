@@ -56,11 +56,13 @@ export default abstract class GenericAdapterInMemory<T extends iDomainObject> im
         return Promise.resolve(success);
     }
 
+    
     constructor() {
         this._dict = new Map<string, T>();
         this._currId = 0;
     }
-
+    
+    abstract CreateAdapter(): GenericAdapterInMemory<T>;
     protected abstract Exists(object: T): boolean;
 
 }

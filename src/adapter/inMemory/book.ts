@@ -14,6 +14,10 @@ export default class BookAdapterInMemory extends GenericAdapterInMemory<iBook> {
         return false;
     }
     
+    CreateAdapter(): GenericAdapterInMemory<iBook> {
+        return new BookAdapterInMemory();
+    }
+
     constructor() {
         super();
     }
