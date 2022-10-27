@@ -2,7 +2,7 @@ import iDomainObject from "./domainObject";
 
 export interface iBook extends iDomainObject{
     title: string;
-    description: string;
+    description?: string;
     isbn: string;
     author_id: string;
     cover_url: string;
@@ -18,7 +18,7 @@ export class Book implements iBook {
     cover_url: string;
     publishing_date: Date;
 
-    constructor(id: string, title: string, description: string, isbn: string, author_id: string, cover_url: string, publishing_date: Date) {
+    constructor(id: string = "", title: string, description: string = "", isbn: string, author_id: string, cover_url: string, publishing_date: Date) {
         this.id = id;
         this.title = title;
         this.description = description;

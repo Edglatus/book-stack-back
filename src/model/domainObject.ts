@@ -1,3 +1,3 @@
 export default interface iDomainObject{
-    id: string;
+    id?: string;
 }
