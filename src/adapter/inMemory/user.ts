@@ -4,21 +4,21 @@ import GenericAdapterInMemory from "./generic";
 
 export default class UserAdapterInMemory extends GenericAdapterInMemory<iUser> implements iUserAdapter {
     
-    Authenticate(name: string, pwd: string): Promise<boolean> {
+    Authenticate(name: string, pwd: string): Promise<{success: boolean, user: iUser | null}> {
         let success: boolean;
 
-        const obj: iUser | null = this.GetByName(name);
+        const user: iUser | null = this.GetByName(name);
 
-        if(obj === null)
+        if(user === null)
             success = false;
         else {
-            if(pwd == obj.password)
+            if(pwd == user.password)
                 success = true;
             else
                 success = false;
         }
 
-        return Promise.resolve(success);
+        return Promise.resolve({success, user: success ? user : null});
     }
 
     protected Exists(object: iUser): boolean {
