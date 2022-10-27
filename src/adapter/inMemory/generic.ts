@@ -15,27 +15,25 @@ export default abstract class GenericAdapterInMemory<T extends iDomainObject> im
 
         return Promise.resolve(array);
     }
-    Create(object: T): Promise<boolean> {
-        let success: boolean;
-
+    Create(object: T): Promise<string> {
         if(!this.Exists(object)) {
             object.id = this._currId.toString();
+            
             this._currId++;
 
             this._dict.set(object.id, object);
-            success = true;
-        }
-        else {
-            success = false;
+            
+            return Promise.resolve(object.id);
         }
 
-        return Promise.resolve(success);
+        return Promise.resolve("");
     }
     Update(id: string, object: T): Promise<boolean> {
         let success: boolean;
 
-        if(this.Exists(object)) {
-            this._dict.set(object.id as string, object);
+        if(this._dict.has(id)) {
+            object.id = id;
+            this._dict.set(id, object);
             success = true;
         }
         else {
