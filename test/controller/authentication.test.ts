@@ -21,10 +21,10 @@ describe("Authentication Controller Tests", () => {
 
     beforeAll(async () => {
         adapter = new UserAdapterInMemory();
-        sut = new AuthenticationController(adapter);
-        controller = new GenericController(adapter);
+        sut = new AuthenticationController();
+        controller = new GenericController();
 
-        const response: httpMocks.MockResponse<any> = await controller.Create(httpMocks.createRequest({body: user}), httpMocks.createResponse());
+        const response: httpMocks.MockResponse<any> = await controller.Create(httpMocks.createRequest({body: user}), httpMocks.createResponse(), adapter);
         id = response._getJSONData().data.id;  
     });
 
@@ -35,7 +35,7 @@ describe("Authentication Controller Tests", () => {
     it("Should return 403 on an invalid user", async () => {
         getReq.body = {username: "Edglatus", password: "123Batata"};
 
-        const response: httpMocks.MockResponse<any> = await sut.Authenticate(getReq, httpMocks.createResponse());
+        const response: httpMocks.MockResponse<any> = await sut.Authenticate(getReq, httpMocks.createResponse(), adapter);
         expect(response.statusCode).toBe(403);
         
         const resData = response._getJSONData();
@@ -47,7 +47,7 @@ describe("Authentication Controller Tests", () => {
     it("Should return 403 on an user with a wrong password", async () => {
         getReq.body = {username: "Eddy", password: "123batata"};
 
-        const response: httpMocks.MockResponse<any> = await sut.Authenticate(getReq, httpMocks.createResponse());
+        const response: httpMocks.MockResponse<any> = await sut.Authenticate(getReq, httpMocks.createResponse(), adapter);
         expect(response.statusCode).toBe(403);
         
         const resData = response._getJSONData();
@@ -59,7 +59,7 @@ describe("Authentication Controller Tests", () => {
     it("Should return 202 and success status on a valid user", async () => {
         getReq.body = {username: "Eddy", password: "123Batata"};
 
-        const response: httpMocks.MockResponse<any> = await sut.Authenticate(getReq, httpMocks.createResponse());
+        const response: httpMocks.MockResponse<any> = await sut.Authenticate(getReq, httpMocks.createResponse(), adapter);
         expect(response.statusCode).toBe(202);
         
         const resData = response._getJSONData();

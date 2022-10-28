@@ -11,7 +11,6 @@ import mockHttp from "node-mocks-http";
 
 describe("Generic Router", () => {
     let controller: iController<iUser> = {
-        adapter: new UserAdapterInMemory,
         GetOne: jest.fn().mockImplementation(async (req, res) => res.status(200).json()),
         GetAll: jest.fn().mockImplementation(async (req, res) => res.status(200).json()),
         Create: jest.fn().mockImplementation(async (req, res) => res.status(200).json()),
@@ -21,7 +20,7 @@ describe("Generic Router", () => {
        
     const server: Express = express();
     
-    server.use("/user", GenericRouter.CreateRoutes(controller))
+    server.use("/user", GenericRouter.CreateRoutes(controller, new UserAdapterInMemory()))
     
     it("Should Call getter Routes", async () => {
         await request(server).get('/user');

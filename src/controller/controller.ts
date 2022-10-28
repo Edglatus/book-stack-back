@@ -4,24 +4,22 @@ import iAdapter from "../adapter/adapter"
 import iDomainObject from "../model/domainObject";
 
 export default interface iController<T extends iDomainObject> {
-    adapter: iAdapter<T>;
-    GetOne(request: express.Request, response: express.Response): Promise<express.Response>;
-    GetAll(request: express.Request, response: express.Response): Promise<express.Response>;
-    Create(request: express.Request, response: express.Response): Promise<express.Response>;
-    Update(request: express.Request, response: express.Response): Promise<express.Response>;
-    Delete(request: express.Request, response: express.Response): Promise<express.Response>;
+    GetOne(request: express.Request, response: express.Response, adapter: iAdapter<T>): Promise<express.Response>;
+    GetAll(request: express.Request, response: express.Response, adapter: iAdapter<T>): Promise<express.Response>;
+    Create(request: express.Request, response: express.Response, adapter: iAdapter<T>): Promise<express.Response>;
+    Update(request: express.Request, response: express.Response, adapter: iAdapter<T>): Promise<express.Response>;
+    Delete(request: express.Request, response: express.Response, adapter: iAdapter<T>): Promise<express.Response>;
 }
 
 export class GenericController<T extends iDomainObject> implements iController<T> {
-    adapter: iAdapter<T>;
-    async GetOne(request: express.Request, response: express.Response): Promise<express.Response> {
+    async GetOne(request: express.Request, response: express.Response, adapter: iAdapter<T>): Promise<express.Response> {
         try {
             const id: string = request.params.id;
 
             if(id === undefined)
                 throw new TypeError("ID is Undefined");
 
-            let obj: T | null = await this.adapter.GetOne(id);
+            let obj: T | null = await adapter.GetOne(id);
 
             if(obj === null)
                 return response.status(404).json({"message": "Object not Found"})
@@ -32,9 +30,9 @@ export class GenericController<T extends iDomainObject> implements iController<T
             return GenericController.handleError(e, response);
         }
     }
-    async GetAll(request: express.Request, response: express.Response): Promise<express.Response> {
+    async GetAll(request: express.Request, response: express.Response, adapter: iAdapter<T>): Promise<express.Response> {
         try {
-            let objs: T[] = await this.adapter.GetAll();
+            let objs: T[] = await adapter.GetAll();
 
             return response.status(200).json({"data": objs});
         }
@@ -42,14 +40,14 @@ export class GenericController<T extends iDomainObject> implements iController<T
             return GenericController.handleError(e, response);
         }
     }
-    async Create(request: express.Request, response: express.Response): Promise<express.Response> {
+    async Create(request: express.Request, response: express.Response, adapter: iAdapter<T>): Promise<express.Response> {
         try {
             let obj: T = request.body;
             
             if(obj === undefined)
                 throw new TypeError("Object is Undefined");
 
-            let success = await this.adapter.Create(obj);
+            let success = await adapter.Create(obj);
 
             if(success)
                 return response.status(200).json({"data": obj});
@@ -60,7 +58,7 @@ export class GenericController<T extends iDomainObject> implements iController<T
             return GenericController.handleError(e, response);
         }
     }
-    async Update(request: express.Request, response: express.Response): Promise<express.Response> {
+    async Update(request: express.Request, response: express.Response, adapter: iAdapter<T>): Promise<express.Response> {
         try {
             const id: string = request.params.id;
             
@@ -72,7 +70,7 @@ export class GenericController<T extends iDomainObject> implements iController<T
             if(obj === undefined)
                 throw new TypeError("Object is Undefined");
 
-            const success: boolean = await this.adapter.Update(id, obj);
+            const success: boolean = await adapter.Update(id, obj);
             const status: number = success ? 200 : 404;
             const message: string = success ? "Object updated." : "Object not Found";
 
@@ -82,7 +80,7 @@ export class GenericController<T extends iDomainObject> implements iController<T
             return GenericController.handleError(e, response);
         }
     }
-    async Delete(request: express.Request, response: express.Response): Promise<express.Response> {
+    async Delete(request: express.Request, response: express.Response, adapter: iAdapter<T>): Promise<express.Response> {
         try {
             const id: string = request.params.id;
 
@@ -90,7 +88,7 @@ export class GenericController<T extends iDomainObject> implements iController<T
                 throw new TypeError("ID is Undefined");
 
 
-            const success: boolean = await this.adapter.Delete(id);
+            const success: boolean = await adapter.Delete(id);
             const status: number = success ? 200 : 404;
             const message: string = success ? "Object updated." : "Object not Found";
 
@@ -111,9 +109,5 @@ export class GenericController<T extends iDomainObject> implements iController<T
         }
 
         return response.status(500).json({"message": message});
-    }
-
-    constructor(adapter: iAdapter<T>){
-        this.adapter = adapter;        
     }
 }
