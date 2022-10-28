@@ -7,5 +7,7 @@ export default interface iAdapter<T extends iDomainObject> {
     Update(id: string, object: T): Promise<boolean>;
     Delete(id: string): Promise<boolean>;
 
+    isObjectOfType(object: any): boolean;
+
     CreateAdapter(): iAdapter<T>;
 }

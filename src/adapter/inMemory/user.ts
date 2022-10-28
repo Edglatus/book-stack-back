@@ -42,6 +42,10 @@ export default class UserAdapterInMemory extends GenericAdapterInMemory<iUser> i
 
         return null;
     }
+
+    isObjectOfType(object: any): boolean {
+        return !(object === null || object === undefined) && ("username" in object && "password" in object);
+    }
     
     CreateAdapter(): GenericAdapterInMemory<iUser> {
         return new UserAdapterInMemory();

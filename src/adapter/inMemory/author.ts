@@ -14,6 +14,10 @@ export default class AuthorAdapterInMemory extends GenericAdapterInMemory<iAutho
         
         return false;
     }
+
+    isObjectOfType(object: any): boolean {
+        return !(object === null || object === undefined) && ("name" in object && "birth_date" in object);
+    }
     
     CreateAdapter(): GenericAdapterInMemory<iAuthor> {
         return new AuthorAdapterInMemory();

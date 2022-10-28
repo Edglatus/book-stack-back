@@ -56,6 +56,7 @@ export default abstract class GenericAdapterInMemory<T extends iDomainObject> im
         return Promise.resolve(success);
     }
 
+    abstract isObjectOfType(object: any): boolean;
     
     constructor() {
         this._dict = new Map<string, T>();

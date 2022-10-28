@@ -5,6 +5,29 @@ import iDomainObject from "../../src/model/domainObject";
 export default function TestAdapter<T extends iDomainObject>(adapter: iAdapter<T>, message: string, createdObj_a: T, createdObj_b: T, obj_a_clone: T, updatedObj: T) {
     describe(message, () => {
         let sut: iAdapter<T>;
+
+        it("Should Create Adapter properly", () => {
+            sut = adapter.CreateAdapter();
+            expect(sut).toBeDefined();
+        });
+
+        it("Should Identify Object of Type", () => {
+            sut = adapter.CreateAdapter();
+
+            const success = adapter.isObjectOfType(createdObj_a);
+            expect(success).toBe(true);
+        });
+
+        it("Should Identify reject invalid objects", () => {
+            sut = adapter.CreateAdapter();
+
+            let success = adapter.isObjectOfType(undefined);
+            expect(success).toBe(false);
+
+            success = adapter.isObjectOfType({});
+            expect(success).toBe(false);
+        });
+
         describe("Entity Creation", () => {
             
             beforeEach(() => {

@@ -16,12 +16,12 @@ export class GenericController<T extends iDomainObject> implements iController<T
         try {
             const id: string = request.params.id;
 
-            if(id === undefined)
+            if(id === undefined || id.trim() == "")
                 throw new TypeError("ID is Undefined");
 
             let obj: T | null = await adapter.GetOne(id);
 
-            if(obj === null)
+            if(!adapter.isObjectOfType(obj))
                 return response.status(404).json({"message": "Object not Found"})
             else
                 return response.status(200).json({"data": obj});
@@ -42,12 +42,12 @@ export class GenericController<T extends iDomainObject> implements iController<T
     }
     async Create(request: express.Request, response: express.Response, adapter: iAdapter<T>): Promise<express.Response> {
         try {
-            let obj: T = request.body;
+            let obj = request.body;
             
-            if(obj === undefined)
+            if(!adapter.isObjectOfType(obj))
                 throw new TypeError("Object is Undefined");
 
-            let success = await adapter.Create(obj);
+            let success = await adapter.Create(obj as T);
 
             if(success)
                 return response.status(200).json({"data": obj});
@@ -62,12 +62,12 @@ export class GenericController<T extends iDomainObject> implements iController<T
         try {
             const id: string = request.params.id;
             
-            if(id === undefined)
+            if(id === undefined || id.trim() == "")
                 throw new TypeError("ID is Undefined");
 
             let obj: T = request.body;
 
-            if(obj === undefined)
+            if(!adapter.isObjectOfType(obj))
                 throw new TypeError("Object is Undefined");
 
             const success: boolean = await adapter.Update(id, obj);
@@ -84,7 +84,7 @@ export class GenericController<T extends iDomainObject> implements iController<T
         try {
             const id: string = request.params.id;
 
-            if(id === undefined)
+            if(id === undefined || id.trim() == "")
                 throw new TypeError("ID is Undefined");
 
 
