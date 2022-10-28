@@ -6,6 +6,8 @@ import GenericRouter from "../../src/routes/genericRouter";
 import request from 'supertest';
 import httpMocks from 'node-mocks-http'
 import body_parser from 'body-parser' ;
+import AuthenticationRouter from "../../src/routes/authenticationRouter";
+import iAuthenticationController, { AuthenticationController } from "../../src/controller/authentication";
 
 
 describe("Generic Router", () => {
@@ -181,5 +183,58 @@ describe("Generic Router", () => {
             expect(success).toBeDefined();
             expect(success).toBe(false);
         });
+    });
+});
+
+describe("Authentication Router", () => {
+    const newUser_a: iUser = {username: "Eddy", password: "123Batata"};
+    const server: Express = express();
+    let id: string;
+
+    beforeAll(async () => {
+        const adapter = new UserAdapterInMemory();
+        const controller: iAuthenticationController = new AuthenticationController();
+        
+        id = await adapter.Create(newUser_a);
+        
+        server.use(body_parser.json());
+        server.use("/auth", AuthenticationRouter.CreateRoutes(controller, adapter));
+    });
+
+    it("Should properly Authenticate on valid user data", async() => {
+        const response = await request(server).post("/auth").send(newUser_a);
+        const data = response.body.data;
+        const success = response.body.success;
+
+        expect(response.status).toBe(202);
+        expect(data).toBeDefined();
+        expect(success).toBeDefined();
+        
+        expect(data).toEqual({id, ...newUser_a});
+        expect(success).toBe(true);
+    });
+
+    it("Should reject an invalid user", async() => {
+        const response = await request(server).post("/auth").send({username: "Edglatus", password: "123Batata"});
+        const data = response.body.data;
+        const success = response.body.success;
+
+        expect(response.status).toBe(403);
+        expect(data).not.toBeDefined();
+        expect(success).toBeDefined();
+        
+        expect(success).toBe(false);
+    });
+
+    it("Should reject on invalid password", async() => {
+        const response = await request(server).post("/auth").send({username: "Eddy", password: "123batata"});
+        const data = response.body.data;
+        const success = response.body.success;
+
+        expect(response.status).toBe(403);
+        expect(data).not.toBeDefined();
+        expect(success).toBeDefined();
+        
+        expect(success).toBe(false);
     });
 });
