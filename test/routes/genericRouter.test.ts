@@ -20,7 +20,7 @@ describe("Generic Router", () => {
        
     const server: Express = express();
     
-    server.use("/user", GenericRouter.CreateRoutes(controller, new UserAdapterInMemory()))
+    server.use("/user", GenericRouter.CreateRoutes(controller, jest.mocked(new UserAdapterInMemory())))
     
     it("Should Call getter Routes", async () => {
         await request(server).get('/user');
