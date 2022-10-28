@@ -11,6 +11,7 @@ const config: Config.InitialOptions = {
   testEnvironment: "node",
   verbose: true,
   automock: false,
-  silent: false
+  silent: false,
+  collectCoverage: true
 }
 export default config
