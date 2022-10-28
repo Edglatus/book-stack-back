@@ -7,7 +7,7 @@ import { AuthenticationControler as AuthenticationController } from '../../src/c
 
 
 
-describe("Authorization Controller Tests", () => {
+describe("Authentication Controller Tests", () => {
     let adapter: iUserAdapter;
     let sut: AuthenticationController;
     let controller: iController<iUser>;
@@ -32,7 +32,7 @@ describe("Authorization Controller Tests", () => {
         getReq = httpMocks.createRequest();
     });
 
-    it("Should not allow an invalid user", async () => {
+    it("Should return 403 on an invalid user", async () => {
         getReq.body = {username: "Edglatus", password: "123Batata"};
 
         const response: httpMocks.MockResponse<any> = await sut.Authenticate(getReq, httpMocks.createResponse());
@@ -44,7 +44,7 @@ describe("Authorization Controller Tests", () => {
         const success: boolean = resData.success;
         expect(success).toBe(false);
     });
-    it("Should not allow a user with a wrong password", async () => {
+    it("Should return 403 on an user with a wrong password", async () => {
         getReq.body = {username: "Eddy", password: "123batata"};
 
         const response: httpMocks.MockResponse<any> = await sut.Authenticate(getReq, httpMocks.createResponse());
@@ -56,7 +56,7 @@ describe("Authorization Controller Tests", () => {
         const success: boolean = resData.success;
         expect(success).toBe(false);
     });
-    it("Should allow a valid user", async () => {
+    it("Should return 202 and success status on a valid user", async () => {
         getReq.body = {username: "Eddy", password: "123Batata"};
 
         const response: httpMocks.MockResponse<any> = await sut.Authenticate(getReq, httpMocks.createResponse());

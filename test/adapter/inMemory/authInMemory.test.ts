@@ -2,7 +2,7 @@ import UserAdapterInMemory from "../../../src/adapter/inMemory/user";
 import { iUserAdapter } from "../../../src/adapter/user";
 import { iUser } from "../../../src/model/user";
 
-describe("Authorization In Memory Adapter Tests", () => {
+describe("Authentication In Memory Adapter Tests", () => {
     let sut: iUserAdapter; 
     let user: iUser;
 

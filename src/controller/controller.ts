@@ -1,4 +1,5 @@
 import express from "express"
+import { isUndefined } from "util";
 import iAdapter from "../adapter/adapter"
 import iDomainObject from "../model/domainObject";
 
@@ -16,6 +17,10 @@ export class GenericController<T extends iDomainObject> implements iController<T
     async GetOne(request: express.Request, response: express.Response): Promise<express.Response> {
         try {
             const id: string = request.params.id;
+
+            if(id === undefined)
+                throw new TypeError("ID is Undefined");
+
             let obj: T | null = await this.adapter.GetOne(id);
 
             if(obj === null)
@@ -34,13 +39,16 @@ export class GenericController<T extends iDomainObject> implements iController<T
             return response.status(200).json({"data": objs});
         }
         catch(e) {
-        console.log(GenericController.handleError);
-        return GenericController.handleError(e, response);
+            return GenericController.handleError(e, response);
         }
     }
     async Create(request: express.Request, response: express.Response): Promise<express.Response> {
         try {
             let obj: T = request.body;
+            
+            if(obj === undefined)
+                throw new TypeError("Object is Undefined");
+
             let success = await this.adapter.Create(obj);
 
             if(success)
@@ -55,7 +63,15 @@ export class GenericController<T extends iDomainObject> implements iController<T
     async Update(request: express.Request, response: express.Response): Promise<express.Response> {
         try {
             const id: string = request.params.id;
+            
+            if(id === undefined)
+                throw new TypeError("ID is Undefined");
+
             let obj: T = request.body;
+
+            if(obj === undefined)
+                throw new TypeError("Object is Undefined");
+
             const success: boolean = await this.adapter.Update(id, obj);
             const status: number = success ? 200 : 404;
             const message: string = success ? "Object updated." : "Object not Found";
@@ -69,6 +85,11 @@ export class GenericController<T extends iDomainObject> implements iController<T
     async Delete(request: express.Request, response: express.Response): Promise<express.Response> {
         try {
             const id: string = request.params.id;
+
+            if(id === undefined)
+                throw new TypeError("ID is Undefined");
+
+
             const success: boolean = await this.adapter.Delete(id);
             const status: number = success ? 200 : 404;
             const message: string = success ? "Object updated." : "Object not Found";

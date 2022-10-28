@@ -19,13 +19,12 @@ describe("Entity Acquisition", () => {
     beforeEach(() => {
         adapter = new UserAdapterInMemory();
         sut = new GenericController<iUser>(adapter);
-        
-        createReq  = httpMocks.createRequest();
+
         getReq = httpMocks.createRequest();
     });
 
-    it("Should return 404 for invalid entity", async () => {
-        getReq.params.id = newUser_a.id;
+    it("Should return 404 for nonexistent id", async () => {
+        getReq.params.id = "0";
 
         const response: httpMocks.MockResponse<any> = await sut.GetOne(getReq, httpMocks.createResponse());
         
@@ -36,7 +35,7 @@ describe("Entity Acquisition", () => {
         expect(getData).not.toBeDefined();
     });
 
-    it("Should an empty list when no entities have been added", async () => {
+    it("Should return an empty list when no entities have been added", async () => {
         const response: httpMocks.MockResponse<any> = await sut.GetAll(getReq, httpMocks.createResponse());
         
         expect(response.statusCode).toEqual(200);
@@ -45,6 +44,13 @@ describe("Entity Acquisition", () => {
         
         expect(getData).toBeDefined();
         expect(getData.length).toEqual(0);
+    });    
+
+    it("Should return 500 on undefined id", async() => {
+        getReq.id = undefined;
+
+        let res_a: httpMocks.MockResponse<any> = await sut.GetOne(getReq, httpMocks.createResponse());
+        expect(res_a.statusCode).toEqual(500);
     });
 });
 
@@ -127,6 +133,13 @@ describe("Entity Creation", () => {
         expect(userList).toContainEqual(newUser_a);
         expect(userList).toContainEqual(newUser_b);
     });
+
+    it("Should return 500 on undefined request body", async() => {
+        createReq.body = undefined;
+
+        let res_a: httpMocks.MockResponse<any> = await sut.Create(createReq, httpMocks.createResponse());
+        expect(res_a.statusCode).toEqual(500);
+    });
 });
 
 describe("Entity Edition", () => {
@@ -160,6 +173,21 @@ describe("Entity Edition", () => {
 
         expect((await sut.Update(getReq, httpMocks.createResponse())).statusCode).toBe(404);
     });
+
+    it("Should return 500 on undefined body", async() => {
+        getReq.params.id = id;
+        getReq.body = undefined;
+
+        let res_a: httpMocks.MockResponse<any> = await sut.Update(getReq, httpMocks.createResponse());
+        expect(res_a.statusCode).toEqual(500);
+    });
+
+    it("Should return 500 on undefined id", async() => {
+        getReq.params.id = undefined;
+
+        let res_a: httpMocks.MockResponse<any> = await sut.Update(getReq, httpMocks.createResponse());
+        expect(res_a.statusCode).toEqual(500);
+    });
 });
 
 describe("Entity Deletion", () => {
@@ -174,7 +202,7 @@ describe("Entity Deletion", () => {
         id = response._getJSONData().data.id;
     });
     
-    it("Should properly update an existing entity", async() => {
+    it("Should properly delete an existing entity", async() => {
         getReq.params.id = id;
 
         expect((await sut.Delete(getReq, httpMocks.createResponse())).statusCode).toBe(200);
@@ -186,9 +214,16 @@ describe("Entity Deletion", () => {
         expect(getData).not.toBeDefined();
     });
 
-    it("Should not allow edition of an inexistent entity", async() => {
+    it("Should not allow deletion of an inexistent entity", async() => {
         getReq.params.id = "-5";
 
         expect((await sut.Delete(getReq, httpMocks.createResponse())).statusCode).toBe(404);
+    });
+
+    it("Should return 500 on undefined id", async() => {
+        getReq.params.id = undefined;
+
+        let res_a: httpMocks.MockResponse<any> = await sut.Delete(getReq, httpMocks.createResponse());
+        expect(res_a.statusCode).toEqual(500);
     });
 });
