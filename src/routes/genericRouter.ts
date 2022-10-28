@@ -1,15 +1,20 @@
 import iController from "../controller/controller";
-import { Express } from "express";
+import express, { Router } from "express";
 import iDomainObject from "../model/domainObject";
 
 export default class GenericRouter {
-    static CreateRoutes<T extends iDomainObject>(app: Express, controller: iController<T>, baseRouteName: string) {
-        app.route("/" + baseRouteName)
+    static CreateRoutes<T extends iDomainObject>(controller: iController<T>): Router {
+        const router: Router = express.Router();
+
+        router.route("/")
             .get(controller.GetAll)
-            .post(controller.Create)
+            .post(controller.Create);
+
+        router.route("/:id")
+            .get(controller.GetOne)
             .put(controller.Update)
             .delete(controller.Delete);
 
-        app.route("/" + baseRouteName + "/id/:id").get(controller.GetOne);
+        return router;
     }
 }

@@ -12,6 +12,7 @@ const config: Config.InitialOptions = {
   verbose: true,
   automock: false,
   silent: false,
-  collectCoverage: true
+  collectCoverage: true,
+  detectOpenHandles: true
 }
 export default config

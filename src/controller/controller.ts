@@ -24,7 +24,7 @@ export class GenericController<T extends iDomainObject> implements iController<T
                 return response.status(200).json({"data": obj});
         }
         catch(e) {
-            return this.handleError(e, response);
+            return GenericController.handleError(e, response);
         }
     }
     async GetAll(request: express.Request, response: express.Response): Promise<express.Response> {
@@ -34,7 +34,8 @@ export class GenericController<T extends iDomainObject> implements iController<T
             return response.status(200).json({"data": objs});
         }
         catch(e) {
-            return this.handleError(e, response);
+        console.log(GenericController.handleError);
+        return GenericController.handleError(e, response);
         }
     }
     async Create(request: express.Request, response: express.Response): Promise<express.Response> {
@@ -48,7 +49,7 @@ export class GenericController<T extends iDomainObject> implements iController<T
                 return response.status(409).json({"message": "Object already exists."});
         }
         catch(e) {
-            return this.handleError(e, response);
+            return GenericController.handleError(e, response);
         }
     }
     async Update(request: express.Request, response: express.Response): Promise<express.Response> {
@@ -62,7 +63,7 @@ export class GenericController<T extends iDomainObject> implements iController<T
             return response.status(status).json({"success": success, "message": message});
         }
         catch(e) {
-            return this.handleError(e, response);
+            return GenericController.handleError(e, response);
         }
     }
     async Delete(request: express.Request, response: express.Response): Promise<express.Response> {
@@ -75,11 +76,11 @@ export class GenericController<T extends iDomainObject> implements iController<T
             return response.status(status).json({"success": success, "message": message});
         }
         catch(e) {
-            return this.handleError(e, response);
+            return GenericController.handleError(e, response);
         }
     }
 
-    private handleError(e: unknown, response: express.Response): express.Response {
+    private static handleError(e: unknown, response: express.Response): express.Response {
         let message: string = "";
 
         if (typeof e === "string") {
@@ -92,6 +93,6 @@ export class GenericController<T extends iDomainObject> implements iController<T
     }
 
     constructor(adapter: iAdapter<T>){
-        this.adapter = adapter;
+        this.adapter = adapter;        
     }
 }
