@@ -1,10 +1,9 @@
-import AuthorAdapterInMemory from "../../../src/adapter/inMemory/author";
-import BookAdapterInMemory from "../../../src/adapter/inMemory/book";
-import GenericAdapterInMemory from "../../../src/adapter/inMemory/generic";
-import UserAdapterInMemory from "../../../src/adapter/inMemory/user";
-import { iAuthor } from "../../../src/model/author";
-import { iBook } from "../../../src/model/book";
-import { iUser } from "../../../src/model/user";
+import AuthorAdapterInMemory from "../../../../src/adapter/inMemory/author";
+import BookAdapterInMemory from "../../../../src/adapter/inMemory/book";
+import UserAdapterInMemory from "../../../../src/adapter/inMemory/user";
+import { iAuthor } from "../../../../src/model/author";
+import { iBook } from "../../../../src/model/book";
+import { iUser } from "../../../../src/model/user";
 import TestAdapter from "../generic";
 
 

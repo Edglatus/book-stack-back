@@ -1,8 +1,8 @@
 import express, { Express, response } from "express";
-import UserAdapterInMemory from "../../src/adapter/inMemory/user";
-import iController from "../../src/controller/controller";
-import { iUser } from "../../src/model/user";
-import GenericRouter from "../../src/routes/genericRouter";
+import UserAdapterInMemory from "../../../src/adapter/inMemory/user";
+import iController from "../../../src/controller/controller";
+import { iUser } from "../../../src/model/user";
+import GenericRouter from "../../../src/routes/genericRouter";
 import request from 'supertest';
 import { ParamsDictionary } from "express-serve-static-core";
 import { ParsedQs } from "qs";

@@ -1,6 +1,6 @@
-import UserAdapterInMemory from "../../../src/adapter/inMemory/user";
-import { iUserAdapter } from "../../../src/adapter/user";
-import { iUser } from "../../../src/model/user";
+import UserAdapterInMemory from "../../../../src/adapter/inMemory/user";
+import { iUserAdapter } from "../../../../src/adapter/user";
+import { iUser } from "../../../../src/model/user";
 
 describe("Authentication In Memory Adapter Tests", () => {
     let sut: iUserAdapter; 

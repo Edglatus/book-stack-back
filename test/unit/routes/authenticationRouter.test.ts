@@ -1,7 +1,7 @@
 import express, { Express } from "express";
-import UserAdapterInMemory from "../../src/adapter/inMemory/user";
-import iAuthenticationController, { AuthenticationController } from "../../src/controller/authentication";
-import AuthenticationRouter from "../../src/routes/authenticationRouter";
+import UserAdapterInMemory from "../../../src/adapter/inMemory/user";
+import iAuthenticationController, { AuthenticationController } from "../../../src/controller/authentication";
+import AuthenticationRouter from "../../../src/routes/authenticationRouter";
 import request from "supertest";
 
 describe("Setter Routes", () => {

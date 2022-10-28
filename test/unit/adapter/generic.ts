@@ -1,5 +1,5 @@
-import iAdapter from "../../src/adapter/adapter";
-import iDomainObject from "../../src/model/domainObject";
+import iAdapter from "../../../src/adapter/adapter";
+import iDomainObject from "../../../src/model/domainObject";
 
 
 export default function TestAdapter<T extends iDomainObject>(adapter: iAdapter<T>, message: string, createdObj_a: T, createdObj_b: T, obj_a_clone: T, updatedObj: T) {

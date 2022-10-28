@@ -1,8 +1,8 @@
-import iAdapter from "../../src/adapter/adapter";
+import iAdapter from "../../../src/adapter/adapter";
 import httpMocks from "node-mocks-http";
-import UserAdapterInMemory from "../../src/adapter/inMemory/user";
-import iController, {GenericController} from "../../src/controller/controller";
-import { iUser } from "../../src/model/user";
+import UserAdapterInMemory from "../../../src/adapter/inMemory/user";
+import iController, {GenericController} from "../../../src/controller/controller";
+import { iUser } from "../../../src/model/user";
 
 
 let adapter: iAdapter<iUser>;

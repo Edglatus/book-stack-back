@@ -1,9 +1,9 @@
 import httpMocks from 'node-mocks-http';
-import { iUserAdapter } from "../../src/adapter/user";
-import { iUser } from "../../src/model/user";
-import iController, { GenericController } from "../../src/controller/controller";
-import UserAdapterInMemory from '../../src/adapter/inMemory/user';
-import { AuthenticationController as AuthenticationController } from '../../src/controller/authentication';
+import { iUserAdapter } from "../../../src/adapter/user";
+import { iUser } from "../../../src/model/user";
+import iController, { GenericController } from "../../../src/controller/controller";
+import UserAdapterInMemory from '../../../src/adapter/inMemory/user';
+import { AuthenticationController as AuthenticationController } from '../../../src/controller/authentication';
 
 
 
