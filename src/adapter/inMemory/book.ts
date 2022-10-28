@@ -13,7 +13,15 @@ export default class BookAdapterInMemory extends GenericAdapterInMemory<iBook> {
 
         return false;
     }
+
+    isObjectOfType(object: any): boolean {
+        return !(object === null || object === undefined) && ("title" in object && "isbn" in object && "cover_url" in object);
+    }
     
+    CreateAdapter(): GenericAdapterInMemory<iBook> {
+        return new BookAdapterInMemory();
+    }
+
     constructor() {
         super();
     }

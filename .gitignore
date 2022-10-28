@@ -1,3 +1,7 @@
 docker-compose.yml
 node_modules
 .env*
+yarn-error.log
+db.json
+/tmp
+/coverage
