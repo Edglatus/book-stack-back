@@ -63,7 +63,7 @@ export default abstract class GenericAdapterInMemory<T extends iDomainObject> im
         this._currId = 0;
     }
     
-    abstract CreateAdapter(): Promise<GenericAdapterInMemory<T>>;
+    abstract CreateAdapter(): Promise<iAdapter<T>>;
     protected abstract Exists(object: T): boolean;
 
 }

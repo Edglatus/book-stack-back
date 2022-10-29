@@ -7,9 +7,15 @@ export default class GenericAdapterMongo<T extends iDomainObject> implements iAd
     private model: iMongoModel<T>;
     
     async GetOne(id: string): Promise<T | null> {
-        const found = await this.model.model.findById(id).exec();
+        try {
+            const found = await this.model.model.findById(id).exec();
+            
+            return found;
+        }
+        catch(e) {
+            return null;
+        }
 
-        return found;
     }
     async GetAll(): Promise<T[]> {
         const found = await this.model.model.find().exec();
@@ -55,7 +61,7 @@ export default class GenericAdapterMongo<T extends iDomainObject> implements iAd
             const document = await this.model.model.findById(id).exec();
     
             if(document !== null) {
-                document.delete();
+                await document.delete();
                 return Promise.resolve(true);
             }
         } 

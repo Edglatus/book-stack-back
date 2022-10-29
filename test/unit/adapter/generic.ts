@@ -115,7 +115,7 @@ export default function TestAdapter<T extends iDomainObject>(adapter: iAdapter<T
                 id = await sut.Create(createdObj_a);
             });
             
-            it("Should properly update an existing entity", async() => {
+            it("Should properly delete an existing entity", async() => {
                 expect(await sut.Delete(id)).toBe(true);
         
                 const deletedAuthor = await sut.GetOne(id);
@@ -123,7 +123,7 @@ export default function TestAdapter<T extends iDomainObject>(adapter: iAdapter<T
                 expect(deletedAuthor).toBeNull();
             });
         
-            it("Should not allow edition of an inexistent entity", async() => {
+            it("Should not allow deletion of an inexistent entity", async() => {
                 expect(await sut.Delete("-5")).toBe(false);
             });
         })

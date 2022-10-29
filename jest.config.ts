@@ -13,6 +13,6 @@ const config: Config.InitialOptions = {
   automock: false,
   silent: false,
   collectCoverage: true,
-  detectOpenHandles: true
+  //detectOpenHandles: true
 }
 export default config

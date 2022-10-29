@@ -3,4 +3,6 @@ import iAdapter from "./adapter";
 
 export interface iUserAdapter extends iAdapter<iUser> {
     Authenticate(name: string, pwd: string): Promise<{success: boolean, user: iUser | null}>;
+
+    CreateAdapter(): Promise<iUserAdapter>;
 }

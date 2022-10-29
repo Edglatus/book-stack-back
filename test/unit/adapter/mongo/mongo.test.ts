@@ -8,6 +8,7 @@ import { iAuthor } from "../../../../src/model/author";
 import { iBook } from "../../../../src/model/book";
 import AuthorMongoModel from "../../../../src/adapter/mongo/model/author";
 import BookMongoModel from "../../../../src/adapter/mongo/model/book";
+import UserAdapterMongo from "../../../../src/adapter/mongo/user";
 
 describe("Mongoose Adapter", () => {
     let connection: Connection;
@@ -25,7 +26,7 @@ describe("Mongoose Adapter", () => {
         const user_a_clone: iUser = new User(undefined, "Eddy", "66613");
     
         const userModel = new UserMongoModel();
-        TestAdapter<iUser>(new GenericAdapterMongo<iUser>(userModel), "User Adapter", newUser_a, newUser_b, user_a_clone, user_a_clone);
+        TestAdapter<iUser>(new UserAdapterMongo(userModel), "User Adapter", newUser_a, newUser_b, user_a_clone, user_a_clone);
     });
 
     describe("Author Adapter", () => {
