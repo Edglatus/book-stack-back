@@ -10,9 +10,9 @@ import TestAdapter from "../generic";
 describe("inMemory Adapter Tests", () => {
     
     //User
-    const newUser_a: iUser = {username: "Eddy", password: "123Batata"};
-    const newUser_b: iUser = {username: "Josué", password: "123Batata"};
-    const user_a_clone: iUser = {username: "Eddy", password: "66613"};
+    const newUser_a: iUser = {email: "Eddy", password: "123Batata"};
+    const newUser_b: iUser = {email: "Josué", password: "123Batata"};
+    const user_a_clone: iUser = {email: "Eddy", password: "66613"};
 
     TestAdapter<iUser>(new UserAdapterInMemory(), "User Adapter", newUser_a, newUser_b, user_a_clone, user_a_clone);
 

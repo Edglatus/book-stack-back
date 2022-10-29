@@ -6,20 +6,20 @@ export default function TestAdapter<T extends iDomainObject>(adapter: iAdapter<T
     describe(message, () => {
         let sut: iAdapter<T>;
 
-        it("Should Create Adapter properly", () => {
-            sut = adapter.CreateAdapter();
+        it("Should Create Adapter properly", async () => {
+            sut = await adapter.CreateAdapter();
             expect(sut).toBeDefined();
         });
 
-        it("Should Identify Object of Type", () => {
-            sut = adapter.CreateAdapter();
+        it("Should Identify Object of Type", async () => {
+            sut = await adapter.CreateAdapter();
 
             const success = adapter.isObjectOfType(createdObj_a);
             expect(success).toBe(true);
         });
 
-        it("Should Identify reject invalid objects", () => {
-            sut = adapter.CreateAdapter();
+        it("Should Identify reject invalid objects", async () => {
+            sut = await adapter.CreateAdapter();
 
             let success = adapter.isObjectOfType(undefined);
             expect(success).toBe(false);
@@ -30,8 +30,8 @@ export default function TestAdapter<T extends iDomainObject>(adapter: iAdapter<T
 
         describe("Entity Creation", () => {
             
-            beforeEach(() => {
-                sut = adapter.CreateAdapter();
+            beforeEach(async () => {
+                sut = await adapter.CreateAdapter();
             });
             
             it("Should properly create an entity", async() => {
@@ -44,7 +44,7 @@ export default function TestAdapter<T extends iDomainObject>(adapter: iAdapter<T
                 const createdAuthor = await sut.GetOne(id);
         
                 expect(createdAuthor).toBeDefined();
-                expect(createdAuthor).toEqual(createdObj_a);
+                expect(createdAuthor).toMatchObject(createdObj_a);
             });
         
             it("Should not allow double creation of entities", async() => {
@@ -70,13 +70,17 @@ export default function TestAdapter<T extends iDomainObject>(adapter: iAdapter<T
         
                 expect(id_b).toBeDefined();
                 expect(id_b).not.toBe("");
-                createdObj_a.id = id_b;
+                createdObj_b.id = id_b;
                 
                 const AuthorList = await sut.GetAll();
         
                 expect(AuthorList).toBeDefined();
-                expect(AuthorList).toContainEqual(createdObj_a);
-                expect(AuthorList).toContainEqual(createdObj_b);
+                expect(AuthorList).toContainEqual(
+                    expect.objectContaining(createdObj_a)
+                );
+                expect(AuthorList).toContainEqual(
+                    expect.objectContaining(createdObj_b)
+                );
             });
         });
         
@@ -84,8 +88,9 @@ export default function TestAdapter<T extends iDomainObject>(adapter: iAdapter<T
             let id: string;
             
             beforeEach(async () => {
-                sut = adapter.CreateAdapter();
+                sut = await adapter.CreateAdapter();
                 id = await sut.Create(createdObj_a);
+                updatedObj.id = id;
             });
             
             it("Should properly update an existing entity", async() => {
@@ -94,7 +99,7 @@ export default function TestAdapter<T extends iDomainObject>(adapter: iAdapter<T
                 const createdAuthor = await sut.GetOne(id);
         
                 expect(createdAuthor).toBeDefined();
-                expect(createdAuthor).toEqual(updatedObj);
+                expect(createdAuthor).toMatchObject(updatedObj);
             });
         
             it("Should not allow edition of an inexistent entity", async() => {
@@ -106,11 +111,11 @@ export default function TestAdapter<T extends iDomainObject>(adapter: iAdapter<T
             let id: string;
             
             beforeEach(async () => {
-                sut = adapter.CreateAdapter();
+                sut = await adapter.CreateAdapter();
                 id = await sut.Create(createdObj_a);
             });
             
-            it("Should properly update an existing entity", async() => {
+            it("Should properly delete an existing entity", async() => {
                 expect(await sut.Delete(id)).toBe(true);
         
                 const deletedAuthor = await sut.GetOne(id);
@@ -118,7 +123,7 @@ export default function TestAdapter<T extends iDomainObject>(adapter: iAdapter<T
                 expect(deletedAuthor).toBeNull();
             });
         
-            it("Should not allow edition of an inexistent entity", async() => {
+            it("Should not allow deletion of an inexistent entity", async() => {
                 expect(await sut.Delete("-5")).toBe(false);
             });
         })

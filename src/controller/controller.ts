@@ -50,7 +50,7 @@ export class GenericController<T extends iDomainObject> implements iController<T
             let success = await adapter.Create(obj as T);
 
             if(success)
-                return response.status(200).json({"data": obj});
+                return response.status(200).json({"data": {id: success, ...obj}});
             else
                 return response.status(409).json({"message": "Object already exists."});
         }

@@ -11,7 +11,7 @@ export default interface iAuthenticationController {
 export class AuthenticationController implements iAuthenticationController {
     async Authenticate(request: express.Request, response: express.Response, adapter: iUserAdapter): Promise<express.Response> {
         const obj: iUser = request.body;
-        const auth = await adapter.Authenticate(obj.username, obj.password);
+        const auth = await adapter.Authenticate(obj.email, obj.password);
 
         if(auth.success) {
             return response.status(202).json({"data": auth.user, "success": auth.success});
