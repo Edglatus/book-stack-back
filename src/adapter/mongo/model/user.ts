@@ -30,8 +30,14 @@ export default class UserMongo extends GenericModel<iUser> {
         return schema;
     }
     protected CreateModel(schema: Schema<iUser, Model<iUser>>): Model<iUser> {
-        const model = mongoose.model<iUser>("User", this.schema);
-        return model;
+        try {
+            const model = mongoose.model<iUser>("User", this.schema);
+
+            return model;
+        }
+        catch {
+            return mongoose.model<iUser>("User");
+        }
     }
 
     constructor() {

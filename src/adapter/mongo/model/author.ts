@@ -29,8 +29,13 @@ export default class AuthorMongoModel extends GenericModel<iAuthor> {
         return schema;
     }
     protected CreateModel(schema: Schema<iAuthor, Model<iAuthor>>): Model<iAuthor> {
-        const model = mongoose.model<iAuthor>("Author", this.schema);
-        return model;
+        try {
+            const model = mongoose.model<iAuthor>("Author", this.schema);
+            return model;
+        }
+        catch {
+            return mongoose.model<iAuthor>("Author");
+        }
     }
 
     constructor() {

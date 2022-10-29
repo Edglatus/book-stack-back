@@ -4,10 +4,10 @@ import GenericAdapterInMemory from "./generic";
 
 export default class UserAdapterInMemory extends GenericAdapterInMemory<iUser> implements iUserAdapter {
     
-    Authenticate(name: string, pwd: string): Promise<{success: boolean, user: iUser | null}> {
+    Authenticate(email: string, pwd: string): Promise<{success: boolean, user: iUser | null}> {
         let success: boolean;
 
-        const user: iUser | null = this.GetByName(name);
+        const user: iUser | null = this.GetByEmail(email);
 
         if(user === null)
             success = false;
@@ -22,21 +22,21 @@ export default class UserAdapterInMemory extends GenericAdapterInMemory<iUser> i
     }
 
     protected Exists(object: iUser): boolean {
-        const uName: string = object.email;
+        const uEmail: string = object.email;
 
         for (const u of this._dict.values()) {
-            let cName: string = u.email; 
-            if(uName == cName)
+            let cEmail: string = u.email; 
+            if(uEmail == cEmail)
                 return true;
         }
 
         return false;
     }
 
-    private GetByName(uName: string): iUser | null {
+    private GetByEmail(uEmail: string): iUser | null {
         for (const u of this._dict.values()) {
-            let name = u.email;
-            if(uName == name)
+            let email = u.email;
+            if(uEmail == email)
                 return u;
         }
 

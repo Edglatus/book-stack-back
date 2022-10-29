@@ -44,8 +44,13 @@ export default class BookMongoModel extends GenericModel<iBook> {
         return schema;
     }
     protected CreateModel(schema: Schema<iBook, Model<iBook>>): Model<iBook> {
-        const model = mongoose.model<iBook>("Book", this.schema);
-        return model;
+        try {
+            const model = mongoose.model<iBook>("Book", this.schema);
+            return model;
+        }
+        catch {
+            return mongoose.model<iBook>("Book");
+        }
     }
 
     constructor() {

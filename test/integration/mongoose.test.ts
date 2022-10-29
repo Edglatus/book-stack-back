@@ -1,19 +1,16 @@
 import express, { Express, response } from "express";
-import UserAdapterInMemory from "../../src/adapter/inMemory/user";
-import iController, { GenericController } from "../../src/controller/controller";
+import { GenericController } from "../../src/controller/controller";
 import { iUser } from "../../src/model/user";
 import GenericRouter from "../../src/routes/genericRouter";
 import request from 'supertest';
-import httpMocks from 'node-mocks-http'
 import body_parser from 'body-parser' ;
-import AuthenticationRouter from "../../src/routes/authenticationRouter";
-import iAuthenticationController, { AuthenticationController } from "../../src/controller/authentication";
 import UserAdapterMongo from "../../src/adapter/mongo/user";
 import UserMongo from "../../src/adapter/mongo/model/user";
 import { iUserAdapter } from "../../src/adapter/user";
 import { Connection } from "mongoose";
 import ConnectToDatabase from "../../src/adapter/mongo/connection";
-
+import iAuthenticationController, { AuthenticationController } from "../../src/controller/authentication";
+import AuthenticationRouter from "../../src/routes/authenticationRouter";
 
 describe("Generic Router", () => {
     let connection: Connection;
@@ -204,63 +201,64 @@ describe("Generic Router", () => {
 });
 
 
-// describe("Authentication Router", () => {
-//     let connection: Connection;
-//     const server: Express = express();
+describe("Authentication Router", () => {
+    let connection: Connection;
+    const server: Express = express();
 
-//     const newUser_a: iUser = {username: "Eddy", password: "123Batata"};
-//     let id: string;
+    const newUser_a: iUser = {email: "Eddy", password: "123Batata"};
+    let id: string;
 
-//     beforeAll(async () => {
-//         connection = await ConnectToDatabase("mongodb://mongo:27017/test", "admin", "admin");
+    beforeAll(async () => {
+        connection = await ConnectToDatabase("mongodb://mongo:27017/test", "admin", "admin");
 
-//         const model = new UserMongo();
-//         let adapter: iUserAdapter = new UserAdapterMongo(model);
-//         const controller: iAuthenticationController = new AuthenticationController();
+        const model = new UserMongo();
+        let adapter: iUserAdapter = new UserAdapterMongo(model);
+        const controller: iAuthenticationController = new AuthenticationController();
         
-//         id = await adapter.Create(newUser_a);
+        id = await adapter.Create(newUser_a);
         
-//         server.use(body_parser.json());
-//         server.use("/auth", AuthenticationRouter.CreateRoutes(controller, adapter));
-//     });
-//     afterAll(() => {
-//         connection.close();
-//     });
+        server.use(body_parser.json());
+        server.use("/auth", AuthenticationRouter.CreateRoutes(controller, adapter));
+    });
+    afterAll(async () => {
+        await connection.dropDatabase();
+        connection.close();
+    });
 
-//     it("Should properly Authenticate on valid user data", async() => {
-//         const response = await request(server).post("/auth").send(newUser_a);
-//         const data = response.body.data;
-//         const success = response.body.success;
+    it("Should properly Authenticate on valid user data", async() => {
+        const response = await request(server).post("/auth").send(newUser_a);
+        const data = response.body.data;
+        const success = response.body.success;
 
-//         expect(response.status).toBe(202);
-//         expect(data).toBeDefined();
-//         expect(success).toBeDefined();
+        expect(response.status).toBe(202);
+        expect(data).toBeDefined();
+        expect(success).toBeDefined();
         
-//         expect(data).toEqual({id, ...newUser_a});
-//         expect(success).toBe(true);
-//     });
+        expect(data).toMatchObject({id, ...newUser_a});
+        expect(success).toBe(true);
+    });
 
-//     it("Should reject an invalid user", async() => {
-//         const response = await request(server).post("/auth").send({username: "Edglatus", password: "123Batata"});
-//         const data = response.body.data;
-//         const success = response.body.success;
+    it("Should reject an invalid user", async() => {
+        const response = await request(server).post("/auth").send({email: "Edglatus", password: "123Batata"});
+        const data = response.body.data;
+        const success = response.body.success;
 
-//         expect(response.status).toBe(403);
-//         expect(data).not.toBeDefined();
-//         expect(success).toBeDefined();
+        expect(response.status).toBe(403);
+        expect(data).not.toBeDefined();
+        expect(success).toBeDefined();
         
-//         expect(success).toBe(false);
-//     });
+        expect(success).toBe(false);
+    });
 
-//     it("Should reject on invalid password", async() => {
-//         const response = await request(server).post("/auth").send({username: "Eddy", password: "123batata"});
-//         const data = response.body.data;
-//         const success = response.body.success;
+    it("Should reject on invalid password", async() => {
+        const response = await request(server).post("/auth").send({email: "Eddy", password: "123batata"});
+        const data = response.body.data;
+        const success = response.body.success;
 
-//         expect(response.status).toBe(403);
-//         expect(data).not.toBeDefined();
-//         expect(success).toBeDefined();
+        expect(response.status).toBe(403);
+        expect(data).not.toBeDefined();
+        expect(success).toBeDefined();
         
-//         expect(success).toBe(false);
-//     });
-// });
+        expect(success).toBe(false);
+    });
+});

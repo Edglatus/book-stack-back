@@ -5,6 +5,9 @@ import iMongoModel from "./model/model";
 
 export default class GenericAdapterMongo<T extends iDomainObject> implements iAdapter<T> {
     private model: iMongoModel<T>;
+    protected get Model(): iMongoModel<T> {
+        return this.model;
+    }
     
     async GetOne(id: string): Promise<T | null> {
         try {
