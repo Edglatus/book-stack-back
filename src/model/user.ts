@@ -1,19 +1,19 @@
 import iDomainObject from "./domainObject";
 
 export interface iUser extends iDomainObject{
-    username: string;
+    email: string;
     password: string;
 }
 
 export class User implements iUser {
     id: string;
-    username: string;
+    email: string;
     password: string;
     
 
     constructor(id: string = "", uname: string, pwd: string) {
         this.id = id;
-        this.username = uname;
+        this.email = uname;
         this.password = pwd;
     }
 }

@@ -8,7 +8,7 @@ describe("Authentication In Memory Adapter Tests", () => {
 
     beforeAll(async () => {
         sut = new UserAdapterInMemory();
-        user = {username: "Eddy", password: "123Batata"};
+        user = {email: "Eddy", password: "123Batata"};
         user.id = await sut.Create(user);        
     });
 

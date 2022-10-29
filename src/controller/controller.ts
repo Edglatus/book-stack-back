@@ -27,10 +27,6 @@ export class GenericController<T extends iDomainObject> implements iController<T
                 return response.status(200).json({"data": obj});
         }
         catch(e) {
-            if(e instanceof Error)
-                console.log(e.message);
-                
-
             return GenericController.handleError(e, response);
         }
     }

@@ -16,9 +16,9 @@ describe("Generic Router", () => {
        
     let server: Express;
     
-    const newUser_a: iUser = {username: "Eddy", password: "123Batata"};
-    const newUser_b: iUser = {username: "Josué", password: "123Batata"};
-    const user_a_clone: iUser = {username: "Eddy", password: "66613"};
+    const newUser_a: iUser = {email: "Eddy", password: "123Batata"};
+    const newUser_b: iUser = {email: "Josué", password: "123Batata"};
+    const user_a_clone: iUser = {email: "Eddy", password: "66613"};
 
     beforeEach(() => {
         adapter = new UserAdapterInMemory();
@@ -187,7 +187,7 @@ describe("Generic Router", () => {
 });
 
 describe("Authentication Router", () => {
-    const newUser_a: iUser = {username: "Eddy", password: "123Batata"};
+    const newUser_a: iUser = {email: "Eddy", password: "123Batata"};
     const server: Express = express();
     let id: string;
 

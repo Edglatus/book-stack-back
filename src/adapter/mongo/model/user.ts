@@ -5,12 +5,12 @@ import GenericModel from "./generic";
 export default class UserMongo extends GenericModel<iUser> {
 
     isObjectOfType(object: any): boolean {
-        return !(object === null || object === undefined) && ("username" in object && "password" in object);
+        return !(object === null || object === undefined) && ("email" in object && "password" in object);
     }
 
     protected CreateSchema(): Schema<iUser, Model<iUser>> {
         const schema = new Schema<iUser>({
-            username: {
+            email: {
                 type: String,
                 required: true,
                 unique: true

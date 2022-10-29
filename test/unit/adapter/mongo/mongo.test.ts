@@ -16,14 +16,15 @@ describe("Mongoose Adapter", () => {
     beforeAll(async () => {
         connection = await ConnectToDatabase("mongodb://mongo:27017/test", "admin", "admin");
     });
-    afterAll(() => {
+    afterAll(async () => {        
+        await connection.dropDatabase();
         connection.close();
     });
 
     describe("User Adapter", () => {
-        const newUser_a: iUser = new User(undefined, "Eddy", "123Batata");
-        const newUser_b: iUser = new User(undefined, "Josué", "123Batata");
-        const user_a_clone: iUser = new User(undefined, "Eddy", "66613");
+        const newUser_a: iUser = {email: "Eddy", password: "123Batata"};
+        const newUser_b: iUser = {email: "Josué", password: "123Batata"};
+        const user_a_clone: iUser = {email: "Eddy", password: "66613"};
     
         const userModel = new UserMongoModel();
         TestAdapter<iUser>(new UserAdapterMongo(userModel), "User Adapter", newUser_a, newUser_b, user_a_clone, user_a_clone);

@@ -22,10 +22,10 @@ export default class UserAdapterInMemory extends GenericAdapterInMemory<iUser> i
     }
 
     protected Exists(object: iUser): boolean {
-        const uName: string = object.username;
+        const uName: string = object.email;
 
         for (const u of this._dict.values()) {
-            let cName: string = u.username; 
+            let cName: string = u.email; 
             if(uName == cName)
                 return true;
         }
@@ -35,7 +35,7 @@ export default class UserAdapterInMemory extends GenericAdapterInMemory<iUser> i
 
     private GetByName(uName: string): iUser | null {
         for (const u of this._dict.values()) {
-            let name = u.username;
+            let name = u.email;
             if(uName == name)
                 return u;
         }
@@ -44,7 +44,7 @@ export default class UserAdapterInMemory extends GenericAdapterInMemory<iUser> i
     }
 
     isObjectOfType(object: any): boolean {
-        return !(object === null || object === undefined) && ("username" in object && "password" in object);
+        return !(object === null || object === undefined) && ("email" in object && "password" in object);
     }
     
     async CreateAdapter(): Promise<iUserAdapter> {
