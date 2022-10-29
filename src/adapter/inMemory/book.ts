@@ -18,8 +18,8 @@ export default class BookAdapterInMemory extends GenericAdapterInMemory<iBook> {
         return !(object === null || object === undefined) && ("title" in object && "isbn" in object && "cover_url" in object);
     }
     
-    CreateAdapter(): GenericAdapterInMemory<iBook> {
-        return new BookAdapterInMemory();
+    CreateAdapter(): Promise<GenericAdapterInMemory<iBook>> {
+        return Promise.resolve(new BookAdapterInMemory());
     }
 
     constructor() {

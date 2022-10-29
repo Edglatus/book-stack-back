@@ -19,8 +19,8 @@ export default class AuthorAdapterInMemory extends GenericAdapterInMemory<iAutho
         return !(object === null || object === undefined) && ("name" in object && "birth_date" in object);
     }
     
-    CreateAdapter(): GenericAdapterInMemory<iAuthor> {
-        return new AuthorAdapterInMemory();
+    CreateAdapter(): Promise<GenericAdapterInMemory<iAuthor>> {
+        return Promise.resolve(new AuthorAdapterInMemory());
     }
 
     constructor() {

@@ -9,5 +9,5 @@ export default interface iAdapter<T extends iDomainObject> {
 
     isObjectOfType(object: any): boolean;
 
-    CreateAdapter(): iAdapter<T>;
+    CreateAdapter(): Promise<iAdapter<T>>;
 }

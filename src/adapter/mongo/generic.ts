@@ -3,8 +3,7 @@ import iDomainObject from "../../model/domainObject";
 import iAdapter from "../adapter";
 import iMongoModel from "./model/model";
 
-export default abstract class GenericAdapterMongo<T extends iDomainObject> implements iAdapter<T> {
-    private connection: Connection;
+export default class GenericAdapterMongo<T extends iDomainObject> implements iAdapter<T> {
     private model: iMongoModel<T>;
     
     async GetOne(id: string): Promise<T | null> {
@@ -22,52 +21,58 @@ export default abstract class GenericAdapterMongo<T extends iDomainObject> imple
             if(!this.isObjectOfType(object))
                 throw new TypeError("Object is of Incorrect type");
 
-            const doc = this.model.ConvertToMongo(object);
-            if(doc.isNew)
+            const doc = this.model.ConvertToDoc(object);
+
+            if(doc !== null) {
                 await doc.save();
-            else
-                throw new Error("Object already exists");
-            
-            return Promise.resolve(doc.id);
+                return Promise.resolve(doc.id);
+            }
         }
-        catch {
-            return Promise.resolve("");
-        }
+        catch(e) { }
+
+        return Promise.resolve("");
+
     }
     async Update(id: string, object: T): Promise<boolean> {
         try {
+
             if(!this.isObjectOfType(object))
                 throw new TypeError("Object is of Incorrect type");
 
-            const doc = this.model.ConvertToMongo(object);
-            if(!doc.isNew)
-                await doc.save();
-            else
-                throw new Error("Object not found");
-            
-            return Promise.resolve(true);
-        }
-        catch {
-            return Promise.resolve(false);
-        }
-    }
-    async Delete(id: string): Promise<boolean> {
-        const document = await this.model.model.findById(id).exec();
+            const doc = await this.model.model.findById(id);
 
-        if(document !== null) {
-            document.delete();
-            return Promise.resolve(true);
+            if(doc !== null) {
+                await doc.updateOne(object).exec();
+                return Promise.resolve(true);
+            }
         }
+        catch(e) { }
 
         return Promise.resolve(false);
     }
-
-    abstract isObjectOfType(object: any): boolean;
+    async Delete(id: string): Promise<boolean> {
+        try {
+            const document = await this.model.model.findById(id).exec();
     
-    abstract CreateAdapter(): iAdapter<T>;
+            if(document !== null) {
+                document.delete();
+                return Promise.resolve(true);
+            }
+        } 
+        catch(e) { }
+        return Promise.resolve(false);
+    }
 
-    constructor(con: Connection, model: iMongoModel<T>) {
-        this.connection = con;
+    isObjectOfType(object: any): boolean {
+        return this.model.isObjectOfType(object);
+    }
+    
+    async CreateAdapter(): Promise<iAdapter<T>> {
+        await this.model.model.deleteMany().exec();
+        return this;
+    }
+
+    constructor(model: iMongoModel<T>) {
         this.model = model;
     }
 }

@@ -47,8 +47,8 @@ export default class UserAdapterInMemory extends GenericAdapterInMemory<iUser> i
         return !(object === null || object === undefined) && ("username" in object && "password" in object);
     }
     
-    CreateAdapter(): GenericAdapterInMemory<iUser> {
-        return new UserAdapterInMemory();
+    CreateAdapter(): Promise<GenericAdapterInMemory<iUser>> {
+        return Promise.resolve(new UserAdapterInMemory());
     }
 
     constructor() {

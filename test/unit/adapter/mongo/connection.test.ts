@@ -9,4 +9,12 @@ describe("Basic Connection", () => {
 
         connection.close();
     });
+
+    it("Should properly authenticate connection", async () => {
+        const connection = await ConnectToDatabase("mongodb://mongo:27017/test", "admin", "admin");
+
+        expect(connection).toBeDefined();
+
+        connection.close();
+    });
 });
