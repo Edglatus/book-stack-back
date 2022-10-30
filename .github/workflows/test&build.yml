@@ -41,11 +41,12 @@ jobs:
       run: yarn test:integration
       
     - name: Run System Tests
+      run: yarn test:system
       env:  
+        CI: true
         MONGO_TEST_URI: ${{ secrets.MONGO_TEST_URI }}
         MONGO_TEST_UNAME: ${{ secrets.MONGO_TEST_UNAME }}
         MONGO_TEST_PWD: ${{ secrets.MONGO_TEST_PWD }}
-      run: yarn test:system
         
   build:
     runs-on: ubuntu-latest
