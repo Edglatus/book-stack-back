@@ -4,7 +4,10 @@
   "main": "server.js",
   "scripts": {
     "start": "node src/index.ts",
-    "test": "jest test/unit test/integration"
+    "test": "jest test/unit test/integration test/system",
+    "test:unit": "jest test/unit",
+    "test:integration": "jest test/integration",
+    "test:system": "jest test/system"
   },
   "license": "MIT",
   "dependencies": {

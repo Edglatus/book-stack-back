@@ -18,7 +18,7 @@ describe("Mongoose Adapter", () => {
     });
     afterAll(async () => {        
         await connection.dropDatabase();
-        connection.close();
+        await connection.close();
     });
 
     describe("User Adapter", () => {
