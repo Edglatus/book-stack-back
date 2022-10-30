@@ -46,7 +46,8 @@ jobs:
       run: yarn test:integration
       
     - name: Run System Tests
-      run: yarn test:system
+      run: |
+        echo '${MONGO_TEST_URI}'
         
   build:
     runs-on: ubuntu-latest
