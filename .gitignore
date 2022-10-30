@@ -5,3 +5,4 @@ yarn-error.log
 db.json
 /tmp
 /coverage
+/build
