@@ -43,22 +43,21 @@ async function SetConfiguration(server: Express, serverType: ServerType): Promis
 async function ConfigureMongoServer(server: Express, serverType: ServerType): Promise<Express> {
     //console.log(serverType);
     const config = dotenv.config();
-    
-    if(!config.parsed)
-        throw Error("Config Error!");
 
     //dotenv
 
     const URI = (serverType == ServerType.Remote) ? 
-        config.parsed.MONGO_REMOTE_URI : (serverType == ServerType.Local) ? 
-            config.parsed.MONGO_LOCAL_URI : config.parsed.MONGO_TEST_URI;
+        process.env.MONGO_REMOTE_URI : (serverType == ServerType.Local) ? 
+            process.env.MONGO_LOCAL_URI : process.env.MONGO_TEST_URI;
     const uName = (serverType == ServerType.Remote) ? 
-        config.parsed.MONGO_REMOTE_UNAME : (serverType == ServerType.Local) ? 
-            config.parsed.MONGO_LOCAL_UNAME : config.parsed.MONGO_TEST_UNAME;
+        process.env.MONGO_REMOTE_UNAME : (serverType == ServerType.Local) ? 
+            process.env.MONGO_LOCAL_UNAME : process.env.MONGO_TEST_UNAME;
     const pwd = (serverType == ServerType.Remote) ? 
-        config.parsed.MONGO_REMOTE_PWD : (serverType == ServerType.Local) ? 
-            config.parsed.MONGO_LOCAL_PWD : config.parsed.MONGO_TEST_PWD;
+        process.env.MONGO_REMOTE_PWD : (serverType == ServerType.Local) ? 
+            process.env.MONGO_LOCAL_PWD : process.env.MONGO_TEST_PWD;
 
+    if(URI === undefined || uName === undefined || pwd === undefined)
+        throw new Error("Config Error!");
 
     //console.log(URI + '\n' + uName + '\n' + pwd)
     //Start Connection
