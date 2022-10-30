@@ -42,9 +42,9 @@ jobs:
       
     - name: Run System Tests
       env:
-        MONGO_TEST_URI: ${{ secrets.MONGO_TEST_URI }}
-        MONGO_TEST_UNAME: $ {{ secrets.MONGO_TEST_UNAME }}
-        MONGO_TEST_PWD: $ {{ secrets.MONGO_TEST_PWD }}
+        "MONGO_TEST_URI": ${{ secrets.MONGO_TEST_URI }}
+        "MONGO_TEST_UNAME": $ {{ secrets.MONGO_TEST_UNAME }}
+        "MONGO_TEST_PWD": $ {{ secrets.MONGO_TEST_PWD }}
       run: yarn test:system
         
   build:
