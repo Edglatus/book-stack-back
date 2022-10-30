@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: node:latest-alpine
+    container: node:latest
     services:
       mongo:
         image: mongo:latest
