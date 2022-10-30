@@ -33,20 +33,19 @@ jobs:
 
     - name: Install modules
       run: yarn
+    
+    - name: Store Environment Variables
+        echo 'MONGO_TEST_URI=${{ secrets.MONGO_TEST_URI }}' >> .env
+        echo 'MONGO_TEST_UNAME=${{ secrets.MONGO_TEST_UNAME }}' >> .env
+        echo 'MONGO_TEST_PWD=${{ secrets.MONGO_TEST_PWD }}' >> .env
+#     - name: Run Unit Tests
+#       run: yarn test:unit
       
-    - name: Run Unit Tests
-      run: yarn test:unit
-      
-    - name: Run Integration Tests
-      run: yarn test:integration
+#     - name: Run Integration Tests
+#       run: yarn test:integration
       
     - name: Run System Tests
       run: yarn test:system
-      env:  
-        CI: true
-        MONGO_TEST_URI: ${{ secrets.MONGO_TEST_URI }}
-        MONGO_TEST_UNAME: ${{ secrets.MONGO_TEST_UNAME }}
-        MONGO_TEST_PWD: ${{ secrets.MONGO_TEST_PWD }}
         
   build:
     runs-on: ubuntu-latest
