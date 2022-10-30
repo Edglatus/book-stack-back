@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     container: node:latest
     services:
@@ -39,6 +39,15 @@ jobs:
       
     - name: Run Integration Tests
       run: yarn test:integration
+        
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
       
     - name: Build
       run: |
