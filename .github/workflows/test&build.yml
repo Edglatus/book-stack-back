@@ -40,9 +40,9 @@ jobs:
         echo MONGO_TEST_URI=${{ secrets.MONGO_TEST_URI }} >> .env
         echo MONGO_TEST_UNAME=${{ secrets.MONGO_TEST_UNAME }} >> .env
         echo MONGO_TEST_PWD=${{ secrets.MONGO_TEST_PWD }} >> .env
-        echo MONGO_LOCAL_URI=${{ MONGO_LOCAL_URI }} >> .env
-        echo MONGO_LOCAL_UNAME=${{ MONGO_LOCAL_UNAME }} >> .env
-        echo MONGO_LOCAL_PWD=${{ MONGO_LOCAL_PWD }} >> .env
+        echo MONGO_LOCAL_URI=${{ secrets.MONGO_LOCAL_URI }} >> .env
+        echo MONGO_LOCAL_UNAME=${{ secrets.MONGO_LOCAL_UNAME }} >> .env
+        echo MONGO_LOCAL_PWD=${{ secrets.MONGO_LOCAL_PWD }} >> .env
         cat .env
 #     - name: Run Unit Tests
 #       run: yarn test:unit
