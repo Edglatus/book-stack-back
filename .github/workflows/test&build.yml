@@ -37,12 +37,9 @@ jobs:
     - name: Store Environment Variables
       run: |
         touch .env
-        echo 'MONGO_TEST_URI=${{ secrets.MONGO_TEST_URI }}' >> .env
-        echo 'MONGO_TEST_UNAME=${{ secrets.MONGO_TEST_UNAME }}' >> .env
-        echo 'MONGO_TEST_PWD=${{ secrets.MONGO_TEST_PWD }}' >> .env
-        echo 'MONGO_TEST_URI=${{ secrets.MONGO_TEST_URI }}'
-        echo 'MONGO_TEST_UNAME=${{ secrets.MONGO_TEST_UNAME }}'
-        echo 'MONGO_TEST_PWD=${{ secrets.MONGO_TEST_PWD }}' >>
+        echo MONGO_TEST_URI=${{ secrets.MONGO_TEST_URI }} >> .env
+        echo MONGO_TEST_UNAME=${{ secrets.MONGO_TEST_UNAME }} >> .env
+        echo MONGO_TEST_PWD=${{ secrets.MONGO_TEST_PWD }} >> .env
 #     - name: Run Unit Tests
 #       run: yarn test:unit
       
