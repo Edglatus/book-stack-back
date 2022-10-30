@@ -2,6 +2,7 @@
   "name": "app",
   "version": "1.0.0",
   "main": "src/index.ts",
+  "type": "module",
   "scripts": {
     "start": "node src/index.ts",
     "test": "jest test/unit test/integration test/system",
