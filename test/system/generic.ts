@@ -1,28 +1,25 @@
 import { Server } from "http";
 import { Express } from "express";
 import iDomainObject from "../../src/model/domainObject";
-import { ShutdownMongo } from "../../src/config";
+import { ServerType, ShutdownMongo } from "../../src/config";
 import request from "supertest";
 
-export default function TestSystemRouting<T extends iDomainObject>(message: string, route: string, createdObj_a: T, createdObj_b: T, updatedObj: T) {
-    const StartServer = require("../../src/index");
-    
-    let server: Server;
+export default function TestSystemRouting<T extends iDomainObject>(
+    message: string, route: string, createdObj_a: T, createdObj_b: T, updatedObj: T, serverType: ServerType
+) {
+    const StartServer = require("../../src/server");
     let app: Express;
 
     let id_a: string;
 
-
     describe(message, () => {
 
         beforeAll(async () => {
-            const result = await StartServer();
-            server = result.server;
+            const result = await StartServer(serverType);
             app = result.app;
         });
         afterAll(async () => {
             await ShutdownMongo();
-            server.close();
         });
         
         describe("Getter Routes", () => {

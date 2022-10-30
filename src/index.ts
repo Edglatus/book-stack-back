@@ -1,19 +1,14 @@
 import { Server } from "http";
 import { Express } from "express";
 import dotenv from "dotenv";
-import ConfigureServer from "./config";
+const StartServer = require("./server");
 
+StartServer().then((app: Express) => {
 
-module.exports = async () => {
-  dotenv.config();
-  
-  const app: Express = await ConfigureServer();
-  const port = process.env.EXPRESS_PORT;
-  
-  const server: Server = app.listen(port, () => {
-    console.log("Server is running on port " + port);
-  });  
-
-  return { app, server };
-}
-
+    dotenv.config();
+    const port = process.env.EXPRESS_PORT;
+    
+    const server: Server = app.listen(port, () => {
+    //console.log("Server is running on port " + port);
+    });  
+});

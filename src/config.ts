@@ -20,31 +20,47 @@ import { Connection } from "mongoose";
 
 let connection: Connection;
 
-export default async function ConfigureServer(): Promise<Express> {
+export enum ServerType {
+    Local,
+    Test,
+    Remote
+}
+
+export default async function ConfigureServer(serverType: ServerType = ServerType.Remote): Promise<Express> {
     let server: Express = express();
     server.use(cors());
     server.use(bodyParser.json());
-    server = await SetConfiguration(server);
+    server = await SetConfiguration(server, serverType);
 
     return server;
 }
 
 
-async function SetConfiguration(server: Express): Promise<Express> {
-    return await ConfigureMongoServer(server);
+async function SetConfiguration(server: Express, serverType: ServerType): Promise<Express> {
+    return await ConfigureMongoServer(server, serverType);
 }
 
-async function ConfigureMongoServer(server: Express): Promise<Express> {
+async function ConfigureMongoServer(server: Express, serverType: ServerType): Promise<Express> {
+    //console.log(serverType);
     const config = dotenv.config();
     
     if(!config.parsed)
         throw Error("Config Error!");
 
     //dotenv
-    const URI = config.parsed.MONGO_URI;
-    const uName = config.parsed.MONGO_UNAME;
-    const pwd = config.parsed.MONGO_PWD;
 
+    const URI = (serverType == ServerType.Remote) ? 
+        config.parsed.MONGO_REMOTE_URI : (serverType == ServerType.Local) ? 
+            config.parsed.MONGO_LOCAL_URI : config.parsed.MONGO_TEST_URI;
+    const uName = (serverType == ServerType.Remote) ? 
+        config.parsed.MONGO_REMOTE_UNAME : (serverType == ServerType.Local) ? 
+            config.parsed.MONGO_LOCAL_UNAME : config.parsed.MONGO_TEST_UNAME;
+    const pwd = (serverType == ServerType.Remote) ? 
+        config.parsed.MONGO_REMOTE_PWD : (serverType == ServerType.Local) ? 
+            config.parsed.MONGO_LOCAL_PWD : config.parsed.MONGO_TEST_PWD;
+
+
+    //console.log(URI + '\n' + uName + '\n' + pwd)
     //Start Connection
     connection = await ConnectToDatabase(URI, uName, pwd);
 
