@@ -6,15 +6,15 @@ on:
   pull_request:
     branches: [ "main" ]
 
+env:
+  MONGO_TEST_URI: ${{ secrets.MONGO_TEST_URI }}
+  MONGO_TEST_UNAME: $ {{ secrets.MONGO_TEST_UNAME }}
+  MONGO_TEST_PWD: $ {{ secrets.MONGO_TEST_PWD }}
+  
 jobs:
   test:
     runs-on: ubuntu-latest
     container: node:latest
-    environment: staging_environment
-    env:
-      MONGO_TEST_URI: ${{secrets.MONGO_TEST_URI}}
-      MONGO_TEST_UNAME: $ {{secrets.MONGO_TEST_UNAME}}
-      MONGO_TEST_PWD: $ {{secrets.MONGO_TEST_PWD}}
     services:
       mongo:
         image: mongo:latest
@@ -47,7 +47,7 @@ jobs:
       
     - name: Run System Tests
       run: |
-        echo '${MONGO_TEST_URI}'
+        echo '${ MONGO_TEST_URI }'
         
   build:
     runs-on: ubuntu-latest
