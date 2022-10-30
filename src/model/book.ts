@@ -5,8 +5,8 @@ export interface iBook extends iDomainObject{
     description?: string;
     isbn: string;
     author_id: string;
-    cover_url: string;
-    publishing_date: Date;
+    cover_url?: string;
+    publishing_date?: Date;
 }
 
 export class Book implements iBook {
