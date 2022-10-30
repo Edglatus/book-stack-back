@@ -10,6 +10,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     container: node:latest
+    environment: staging_environment
     env:
       MONGO_TEST_URI: ${{secrets.MONGO_TEST_URI}}
       MONGO_TEST_UNAME: $ {{secrets.MONGO_TEST_UNAME}}
