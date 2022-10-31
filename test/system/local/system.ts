@@ -14,9 +14,9 @@ export default function SetupSystemTests(message: string, serverType: ServerType
     describe(message + " System Test", () => {
     
         // //User
-        const newUser_a: iUser = {email: "Eddy", password: "123Batata"};
-        const newUser_b: iUser = {email: "Josué", password: "123Batata"};
-        const updatedUser: iUser = {email: "Eddy", password: "66613"};
+        const newUser_a: iUser = {email: "Eddy@mail.com", password: "123Batata$"};
+        const newUser_b: iUser = {email: "Josué@mail.com", password: "123Batata$"};
+        const updatedUser: iUser = {email: "Eddy@mail.com", password: "666Potato$"};
 
         TestSystemRouting<iUser>("User Routes", "/user", newUser_a, newUser_b, updatedUser, serverType);
 
@@ -49,7 +49,7 @@ export default function SetupSystemTests(message: string, serverType: ServerType
 
         let app: Express;
 
-        const newUser_b: iUser = {email: "Josué", password: "123Batata"};
+        const newUser_b: iUser = {email: "Josué@mail.com", password: "123Batata$"};
         let id_b: string;
 
 

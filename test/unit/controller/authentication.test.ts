@@ -17,7 +17,7 @@ describe("Authentication Controller Tests", () => {
 
     let id: string;
 
-    const user: iUser = {email: "Eddy", password: "123Batata"};
+    const user: iUser = {email: "Eddy@mail.com", password: "123Batata$"};
 
     beforeAll(async () => {
         adapter = new UserAdapterInMemory();
@@ -33,7 +33,7 @@ describe("Authentication Controller Tests", () => {
     });
 
     it("Should return 403 on an invalid user", async () => {
-        getReq.body = {email: "Edglatus", password: "123Batata"};
+        getReq.body = {email: "Edglatus", password: user.password};
 
         const response: httpMocks.MockResponse<any> = await sut.Authenticate(getReq, httpMocks.createResponse(), adapter);
         expect(response.statusCode).toBe(403);
@@ -45,7 +45,7 @@ describe("Authentication Controller Tests", () => {
         expect(success).toBe(false);
     });
     it("Should return 403 on an user with a wrong password", async () => {
-        getReq.body = {email: "Eddy", password: "123batata"};
+        getReq.body = {email: user.email, password: "123batata"};
 
         const response: httpMocks.MockResponse<any> = await sut.Authenticate(getReq, httpMocks.createResponse(), adapter);
         expect(response.statusCode).toBe(403);
@@ -57,7 +57,7 @@ describe("Authentication Controller Tests", () => {
         expect(success).toBe(false);
     });
     it("Should return 202 and success status on a valid user", async () => {
-        getReq.body = {email: "Eddy", password: "123Batata"};
+        getReq.body = {email: user.email, password: user.password};
 
         const response: httpMocks.MockResponse<any> = await sut.Authenticate(getReq, httpMocks.createResponse(), adapter);
         expect(response.statusCode).toBe(202);
