@@ -14,15 +14,15 @@ export default function SetupSystemTests(message: string, serverType: ServerType
     describe(message + " System Test", () => {
     
         // //User
-        const newUser_a: iUser = {email: "Eddy", password: "123Batata"};
-        const newUser_b: iUser = {email: "Josué", password: "123Batata"};
-        const updatedUser: iUser = {email: "Eddy", password: "66613"};
+        const newUser_a: iUser = {email: "Eddy@mail.com", password: "123Batata$"};
+        const newUser_b: iUser = {email: "Josue@mail.com", password: "123Batata$"};
+        const updatedUser: iUser = {email: "Eddy@mail.com", password: "666Potato$"};
 
         TestSystemRouting<iUser>("User Routes", "/user", newUser_a, newUser_b, updatedUser, serverType);
 
         // //Author
         const newAuthor_a: iAuthor = {name: "Eddy", birth_date: new Date(1996, 8, 23)};
-        const newAuthor_b: iAuthor = {name: "Josué", birth_date: new Date(1973, 4, 28)};
+        const newAuthor_b: iAuthor = {name: "Josue", birth_date: new Date(1973, 4, 28)};
         const updatedAuthor: iAuthor = {name: "Edglatus", birth_date: new Date(1996, 8, 23)};
 
         TestSystemRouting<iAuthor>("Author Routes", "/author", newAuthor_a, newAuthor_b, updatedAuthor, serverType);
@@ -49,7 +49,7 @@ export default function SetupSystemTests(message: string, serverType: ServerType
 
         let app: Express;
 
-        const newUser_b: iUser = {email: "Josué", password: "123Batata"};
+        const newUser_b: iUser = {email: "Josue@mail.com", password: "123Batata$"};
         let id_b: string;
 
 
