@@ -17,7 +17,7 @@ describe("Authentication In Memory Adapter Tests", () => {
         const model = new UserMongo();
         sut = new UserAdapterMongo(model);
 
-        user = {email: "Eddy", password: "123Batata"};
+        user = {email: "Eddy@mail.com", password: "123Batata$"};
         user.id = await sut.Create(user);
     });
     afterAll(async() => {
@@ -26,12 +26,12 @@ describe("Authentication In Memory Adapter Tests", () => {
     });
 
     it("Should not allow an invalid user", async () => {
-        expect(await sut.Authenticate("Edglatus", "123Batata")).toMatchObject({success: false, user: null});
+        expect(await sut.Authenticate("Edglatus", user.password)).toMatchObject({success: false, user: null});
     });
     it("Should not allow a user with a wrong password", async () => {
-        expect(await sut.Authenticate("Eddy", "123batata")).toMatchObject({success: false, user: null});
+        expect(await sut.Authenticate(user.email, "123batata")).toMatchObject({success: false, user: null});
     });
     it("Should allow a valid user", async () => {
-        expect(await sut.Authenticate("Eddy", "123Batata")).toMatchObject({success: true, user: user});
+        expect(await sut.Authenticate(user.email, user.password)).toMatchObject({success: true, user: user});
     });
 });

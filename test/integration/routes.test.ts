@@ -16,9 +16,9 @@ describe("Generic Router", () => {
        
     let server: Express;
     
-    const newUser_a: iUser = {email: "Eddy", password: "123Batata"};
-    const newUser_b: iUser = {email: "Josué", password: "123Batata"};
-    const user_a_clone: iUser = {email: "Eddy", password: "66613"};
+    const newUser_a: iUser = {email: "Eddy@mail.com", password: "123Batata$"};
+    const newUser_b: iUser = {email: "Josue@mail.com", password: "123Batata$"};
+    const user_a_clone: iUser = {email: "Eddy@mail.com", password: "666Potato$"};
 
     beforeEach(() => {
         adapter = new UserAdapterInMemory();
@@ -187,7 +187,7 @@ describe("Generic Router", () => {
 });
 
 describe("Authentication Router", () => {
-    const newUser_a: iUser = {email: "Eddy", password: "123Batata"};
+    const newUser_a: iUser = {email: "Eddy@mail.com", password: "123Batata$"};
     const server: Express = express();
     let id: string;
 
@@ -215,7 +215,7 @@ describe("Authentication Router", () => {
     });
 
     it("Should reject an invalid user", async() => {
-        const response = await request(server).post("/auth").send({username: "Edglatus", password: "123Batata"});
+        const response = await request(server).post("/auth").send({username: newUser_a.email, password: "123Batata"});
         const data = response.body.data;
         const success = response.body.success;
 
@@ -227,7 +227,7 @@ describe("Authentication Router", () => {
     });
 
     it("Should reject on invalid password", async() => {
-        const response = await request(server).post("/auth").send({username: "Eddy", password: "123batata"});
+        const response = await request(server).post("/auth").send({username: "Eddy", password: newUser_a.password});
         const data = response.body.data;
         const success = response.body.success;
 
