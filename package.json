@@ -4,9 +4,9 @@
   "main": "build/index.js",
   "type": "module",
   "scripts": {
-    "start": "node build/index.js",
+    "start": "yarn build/index.js",
     "test": "jest ./test/unit ./test/integration ./test/system",
-    "build": "node tsc",
+    "build": "tsc",
     "test:unit": "jest ./test/unit",
     "test:integration": "jest ./test/integration",
     "test:system": "jest ./test/system"
