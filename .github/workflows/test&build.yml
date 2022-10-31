@@ -54,6 +54,7 @@ jobs:
       uses: nick-fields/retry@v2
       with:
         max_attempts: 3
+        retry_on: error
         command: yarn test:system
         
   build:
