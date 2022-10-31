@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node build/index.js",
     "test": "jest ./test/unit ./test/integration ./test/system",
-    "build": "yarn tsc",
+    "build": "node tsc",
     "test:unit": "jest ./test/unit",
     "test:integration": "jest ./test/integration",
     "test:system": "jest ./test/system"
