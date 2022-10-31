@@ -29,7 +29,10 @@ jobs:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
-        node-version: 16
+        node-version: 16      
+    - uses: nick-fields/retry@v2
+      with:
+        max_attempts: 3
 
     - name: Install modules
       run: yarn
@@ -44,11 +47,11 @@ jobs:
         echo MONGO_LOCAL_UNAME=${{ secrets.MONGO_LOCAL_UNAME }} >> .env
         echo MONGO_LOCAL_PWD=${{ secrets.MONGO_LOCAL_PWD }} >> .env
         cat .env
-#     - name: Run Unit Tests
-#       run: yarn test:unit
+    - name: Run Unit Tests
+      run: yarn test:unit
       
-#     - name: Run Integration Tests
-#       run: yarn test:integration
+    - name: Run Integration Tests
+      run: yarn test:integration
       
     - name: Run System Tests
       run: yarn test:system
