@@ -1,10 +1,9 @@
 {
   "name": "app",
   "version": "1.0.0",
-  "main": "build/index.js",
-  "type": "module",
+  "main": "build/src/index.js",
   "scripts": {
-    "start": "yarn build/index.js",
+    "start": "node build/src/index.js",
     "test": "jest ./test/unit ./test/integration ./test/system",
     "build": "tsc",
     "test:unit": "jest ./test/unit",

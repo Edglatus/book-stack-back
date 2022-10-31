@@ -4,10 +4,10 @@ import dotenv from "dotenv";
 import ConfigureServer, { ServerType } from "./config";
 
 
-module.exports = async (serverType: ServerType = ServerType.Remote) => {
+export default async (serverType: ServerType = ServerType.Remote): Promise<Express> => {
   
   const app: Express = await ConfigureServer(serverType);
 
-  return { app };
+  return app;
 }
 
