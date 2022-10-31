@@ -3,11 +3,12 @@ import { Express } from "express";
 import iDomainObject from "../../src/model/domainObject";
 import { ServerType, ShutdownMongo } from "../../src/config";
 import request from "supertest";
+import StartServer from "../../src/server";
 
 export default function TestSystemRouting<T extends iDomainObject>(
     message: string, route: string, createdObj_a: T, createdObj_b: T, updatedObj: T, serverType: ServerType
 ) {
-    const StartServer = require("../../src/server");
+    
     let app: Express;
 
     let id_a: string;
@@ -15,8 +16,7 @@ export default function TestSystemRouting<T extends iDomainObject>(
     describe(message, () => {
 
         beforeAll(async () => {
-            const result = await StartServer(serverType);
-            app = result.app;
+            app = await StartServer(serverType);
         });
         afterAll(async () => {
             await ShutdownMongo();

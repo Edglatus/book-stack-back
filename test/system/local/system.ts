@@ -6,6 +6,7 @@ import { ServerType, ShutdownMongo } from "../../../src/config";
 import TestSystemRouting from "../generic";
 import { iAuthor } from "../../../src/model/author";
 import { iBook } from "../../../src/model/book";
+import StartServer from "../../../src/server";
 
 
 export default function SetupSystemTests(message: string, serverType: ServerType) {
@@ -45,7 +46,6 @@ export default function SetupSystemTests(message: string, serverType: ServerType
 
 
     describe(message + "Authentication Router", () => {
-        const StartServer = require("../../../src/server")
 
         let app: Express;
 
@@ -54,8 +54,7 @@ export default function SetupSystemTests(message: string, serverType: ServerType
 
 
         beforeAll(async () => {
-            const result = await StartServer(serverType);
-            app = result.app;
+            app = await StartServer(serverType);
 
             const response_b = await request(app).post("/user").send(newUser_b);
             id_b = response_b.body.data.id;
