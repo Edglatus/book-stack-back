@@ -5,26 +5,28 @@
   "type": "module",
   "scripts": {
     "start": "node build/index.js",
-    "test": "jest test/unit test/integration test/system",
+    "test": "jest ./test/unit ./test/integration ./test/system",
     "build": "yarn tsc",
-    "test:unit": "jest test/unit",
-    "test:integration": "jest test/integration",
-    "test:system": "jest test/system"
+    "test:unit": "jest ./test/unit",
+    "test:integration": "jest ./test/integration",
+    "test:system": "jest ./test/system"
   },
   "license": "MIT",
   "dependencies": {
     "@types/cors": "^2.8.12",
     "body-parser": "^1.20.1",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mongoose": "^6.7.0",
-    "dotenv": "^16.0.3"
+    "mongoose-unique-validator": "^3.1.0"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.2",
     "@types/express": "^4.17.14",
     "@types/jest": "^29.2.0",
     "@types/mongoose": "^5.11.97",
+    "@types/mongoose-unique-validator": "^1.0.6",
     "@types/node": "^18.11.5",
     "@types/supertest": "^2.0.12",
     "jest": "^29.2.2",

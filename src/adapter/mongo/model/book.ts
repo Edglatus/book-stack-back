@@ -1,6 +1,7 @@
 import { iBook } from "../../../model/book";
 import mongoose, { Schema, Model } from "mongoose";
 import GenericModel from "./generic";
+import uniqueValidator from "mongoose-unique-validator";
 
 export default class BookMongoModel extends GenericModel<iBook> {
     isObjectOfType(object: any): boolean {
@@ -40,6 +41,7 @@ export default class BookMongoModel extends GenericModel<iBook> {
         });
         schema.set('toJSON', { virtuals: true });
         schema.set('toObject', { virtuals: true });
+        schema.plugin(uniqueValidator);
 
         return schema;
     }

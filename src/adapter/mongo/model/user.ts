@@ -1,6 +1,7 @@
 import mongoose, { Schema, Model, Document } from "mongoose";
 import { iUser } from "../../../model/user";
 import GenericModel from "./generic";
+import uniqueValidator from "mongoose-unique-validator";
 
 export default class UserMongo extends GenericModel<iUser> {
 
@@ -26,6 +27,7 @@ export default class UserMongo extends GenericModel<iUser> {
         });        
         schema.set('toJSON', { virtuals: true });
         schema.set('toObject', { virtuals: true });
+        schema.plugin(uniqueValidator);
 
         return schema;
     }

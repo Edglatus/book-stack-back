@@ -1,6 +1,7 @@
 import { iAuthor } from "../../../model/author";
 import mongoose, { Schema, Model } from "mongoose";
 import GenericModel from "./generic";
+import uniqueValidator from "mongoose-unique-validator";
 
 export default class AuthorMongoModel extends GenericModel<iAuthor> {
     isObjectOfType(object: any): boolean {
@@ -25,6 +26,7 @@ export default class AuthorMongoModel extends GenericModel<iAuthor> {
         });
         schema.set('toJSON', { virtuals: true });
         schema.set('toObject', { virtuals: true });
+        schema.plugin(uniqueValidator);
 
         return schema;
     }
