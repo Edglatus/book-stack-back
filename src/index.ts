@@ -9,7 +9,6 @@ StartServer().then((app: Express) => {
     const port = process.env.EXPRESS_PORT;
     
     app.listen(port, () => {
-        console.log("É 13, PORRA");
-        
+        console.log("Listening on port " + port);
     });
 });

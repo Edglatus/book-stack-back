@@ -1,9 +1,9 @@
 {
   "name": "app",
   "version": "1.0.0",
-  "main": "build/src/index.js",
+  "main": "build/index.js",
   "scripts": {
-    "start": "node build/src/index.js",
+    "start": "node build/index.js",
     "test": "jest ./test/unit ./test/integration ./test/system",
     "build": "tsc",
     "test:unit": "jest ./test/unit",
