@@ -30,9 +30,6 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node-version: 16      
-    - uses: nick-fields/retry@v2
-      with:
-        max_attempts: 3
 
     - name: Install modules
       run: yarn
@@ -54,7 +51,10 @@ jobs:
       run: yarn test:integration
       
     - name: Run System Tests
-      run: yarn test:system
+      uses: nick-fields/retry@v2
+      with:
+        max_attempts: 3
+        command: yarn test:system
         
   build:
     runs-on: ubuntu-latest
