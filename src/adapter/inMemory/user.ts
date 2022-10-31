@@ -44,9 +44,33 @@ export default class UserAdapterInMemory extends GenericAdapterInMemory<iUser> i
     }
 
     isObjectOfType(object: any): boolean {
-        return !(object === null || object === undefined) && ("email" in object && "password" in object);
+        return !(object === null || object === undefined) && 
+                ("email" in object && this.validateEmail(object.email)) && 
+                ("password" in object && this.validatePassword(object.password));
     }
     
+    private validateEmail(email: string): boolean {
+        let validEmail: boolean;
+        var emailRegex: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+        validEmail = emailRegex.test(email);
+        if(!validEmail)
+        console.log("Email :" + email);
+        
+
+        return validEmail;
+    }
+    private validatePassword(password: string): boolean {
+        let validPassword: boolean;
+        var passwordRegex: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&])(?=.*\w).{8,}$/;
+
+        validPassword = passwordRegex.test(password);
+        if(!validPassword)
+        console.log("Password :" + password);
+
+        return validPassword;
+    }
+
     async CreateAdapter(): Promise<iUserAdapter> {
         return Promise.resolve(new UserAdapterInMemory());
     }

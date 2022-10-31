@@ -23,7 +23,7 @@ describe("Mongoose Adapter", () => {
 
     describe("User Adapter", () => {
         const newUser_a: iUser = {email: "Eddy@mail.com", password: "123Batata$"};
-        const newUser_b: iUser = {email: "Josué@mail.com", password: "123Batata$"};
+        const newUser_b: iUser = {email: "Josue@mail.com", password: "123Batata$"};
         const user_a_clone: iUser = {email: "Eddy@mail.com", password: "666Potato$"};
     
         const userModel = new UserMongoModel();
@@ -32,7 +32,7 @@ describe("Mongoose Adapter", () => {
 
     describe("Author Adapter", () => {
         const newAuthor_a: iAuthor = {name: "Eddy", birth_date: new Date(1996, 8, 23)};
-        const newAuthor_b: iAuthor = {name: "Josué", birth_date: new Date(1973, 4, 28)};
+        const newAuthor_b: iAuthor = {name: "Josue", birth_date: new Date(1973, 4, 28)};
         const author_a_clone: iAuthor = {name: "Eddy", birth_date: new Date(1996, 8, 28)};
         const updatedAuthor: iAuthor = {name: "Edglatus", birth_date: new Date(1996, 8, 23)};
     

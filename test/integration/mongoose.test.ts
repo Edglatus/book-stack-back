@@ -31,7 +31,7 @@ describe("Generic Router", () => {
     let server: Express;
     
     const newUser_a: iUser = {email: "Eddy@mail.com", password: "123Batata$"};
-    const newUser_b: iUser = {email: "Josué@mail.com", password: "123Batata$"};
+    const newUser_b: iUser = {email: "Josue@mail.com", password: "123Batata$"};
     const user_a_clone: iUser = {email: "Eddy@mail.com", password: "666Potato$"};
 
     beforeEach(async () => {
