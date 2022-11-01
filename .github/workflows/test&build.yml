@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
   
 jobs:
-  test:
+  tests:
     runs-on: ubuntu-latest
     container: node:latest
     services:
@@ -27,9 +27,6 @@ jobs:
     
     steps:
     - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 16      
 
     - name: Install modules
       run: yarn
@@ -43,7 +40,6 @@ jobs:
         echo MONGO_LOCAL_URI=${{ secrets.MONGO_LOCAL_URI }} >> .env
         echo MONGO_LOCAL_UNAME=${{ secrets.MONGO_LOCAL_UNAME }} >> .env
         echo MONGO_LOCAL_PWD=${{ secrets.MONGO_LOCAL_PWD }} >> .env
-        cat .env
     - name: Run Unit Tests
       run: yarn test:unit
       
@@ -51,12 +47,6 @@ jobs:
       run: yarn test:integration
       
     - name: Run System Tests
-      uses: nick-fields/retry@v2
-      with:
-        max_attempts: 3
-        retry_on: error
-        timeout_minutes: 1
-        command: yarn test:system
         
   build:
     runs-on: ubuntu-latest
