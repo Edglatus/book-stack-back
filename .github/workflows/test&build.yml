@@ -47,6 +47,7 @@ jobs:
       run: yarn test:integration
       
     - name: Run System Tests
+      run: yarn test:system
         
   build:
     runs-on: ubuntu-latest
